@@ -1,0 +1,42 @@
+{
+	"name": "mvccore/ext-modelform",
+	"type": "library",
+	"description": "MvcCore - Extension - ModelForm - extension to build forms by decorated model classes.",
+	"keywords": [
+		"mvc",
+		"mvccore",
+		"framework",
+		"extension",
+		"plugin",
+		"plug-in",
+		"ext",
+		"model",
+		"form",
+		"modelform"
+	],
+	"license": [ "BSD-3-Clause" ],
+	"authors": [{
+		"name": "Tom Flidr",
+		"homepage": "https://github.com/tomFlidr"
+	}],
+	"require": {
+		"php": ">=5.4.0",
+		"mvccore/mvccore": "^5.0.4",
+		"mvccore/ext-model-db": "^5.0.1",
+		"mvccore/ext-form": "^5.1.2"
+	},
+	"suggest": {
+		"mvccore/ext-cache-*": "MvcCore cache extensions to speed up operations driven by class anotations.",
+		"mvccore/ext-form-field-text": "MvcCore form extension with input field types text, email, password, search, tel, url and textarea field.",
+		"mvccore/ext-form-field-numeric": "MvcCore form extension with input field types number and range.",
+		"mvccore/ext-form-field-selection": "MvcCore form extension with fields select, country select, checkbox(es) and radios.",
+		"mvccore/ext-form-field-date": "MvcCore form extension with input field types date, datetime, time, week and month.",
+		"mvccore/ext-form-field-button": "MvcCore form extension with button fields and input submit fields.",
+		"mvccore/ext-form-field-special": "MvcCore form extension with input type file and color.",
+		"mvccore/ext-form-validator-special": "MvcCore form extension with special text and numeric validators."
+	},
+	"autoload": {
+		"classmap": [ "src/" ]
+	},
+	"minimum-stability": "dev"
+}
