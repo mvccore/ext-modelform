@@ -21,6 +21,12 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 
 	use		\MvcCore\Ext\ModelForms\Forms\Features;
 
+	/**
+	 * @inheritDocs
+	 * @param  bool $submit      `TRUE` if form is submitting, `FALSE` otherwise by default.
+	 * @throws \RuntimeException No form id property defined or Form id `...` already defined.
+	 * @return void
+	 */
 	public function Init ($submit = FALSE): void {
 		parent::Init($submit = FALSE);
 		$this->SetModelPropsFlags(\MvcCore\IModel::PROPS_PROTECTED |\MvcCore\IModel::PROPS_INHERIT);
@@ -41,6 +47,11 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 		}
 	}
 
+	/**
+	 * @inheritDocs
+	 * @param  array $rawRequestParams Optional, raw `$_POST` or `$_GET` array could be passed.
+	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
+	 */
 	public function Submit (array & $rawRequestParams = []) {
 		//parent::Submit($rawRequestParams);
 		// TODO: udelat submitnutí podle model formu - kdy se automaticky zavolá insert nebo update!

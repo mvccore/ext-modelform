@@ -19,7 +19,7 @@ trait ModelFormInitMethods {
 	
 	/**
 	 * Initialize model form id, fields, submit buttons and initial values.
-	 * @param bool $submit 
+	 * @param  bool $submit 
 	 * @throws \InvalidArgumentException|\RuntimeException
 	 * @return void
 	 */
@@ -34,7 +34,7 @@ trait ModelFormInitMethods {
 	
 	/**
 	 * Initialize model form submit buttons.
-	 * @param bool $submit 
+	 * @param  bool $submit 
 	 * @return void
 	 */
 	protected function initModelButtons ($submit = FALSE) {
@@ -62,7 +62,7 @@ trait ModelFormInitMethods {
 
 	/**
 	 * Initialize model form id for rendered elements and session key.
-	 * @param bool $submit 
+	 * @param  bool $submit 
 	 * @throws \InvalidArgumentException|\RuntimeException
 	 * @return void
 	 */
@@ -120,8 +120,8 @@ trait ModelFormInitMethods {
 	 * Try to complete array with non `NULL` unique values 
 	 * for model instance by given properties names array.
 	 * Second argument is boolean for primary key fields.
-	 * @param \string[] $fieldsNames 
-	 * @param bool $primaryKeys 
+	 * @param  \string[] $fieldsNames 
+	 * @param  bool      $primaryKeys 
 	 * @return \string[]
 	 */
 	protected function initModelFormIdGetUniqueValueByNames ($fieldsNames, $primaryKeys) {
@@ -152,8 +152,8 @@ trait ModelFormInitMethods {
 	 * will be rendered into output and sent to client. If you want 
 	 * to specify different unique form id, overwrite this method 
 	 * or method `initModelFormId()` in extended class.
-	 * @param string $formIdBegin 
-	 * @param mixed $primaryFieldValue 
+	 * @param  string $formIdBegin 
+	 * @param  mixed  $primaryFieldValue 
 	 * @return void
 	 */
 	protected function initModelFormIdSetUp ($formIdBegin, $primaryFieldValue = NULL) {
@@ -167,7 +167,7 @@ trait ModelFormInitMethods {
 	
 	/**
 	 * Init model form initial values from model instance for edit or delete.
-	 * @param bool $submit 
+	 * @param  bool $submit 
 	 * @return void
 	 */
 	protected function initModelValues ($submit = FALSE) {
@@ -187,7 +187,7 @@ trait ModelFormInitMethods {
 	/**
 	 * Initialize all model form fields by it's properties (and model flags),
 	 * by given model instance or by model full class name.
-	 * @param bool $submit 
+	 * @param  bool $submit 
 	 * @throws \InvalidArgumentException 
 	 * @return void
 	 */
@@ -205,9 +205,9 @@ trait ModelFormInitMethods {
 	/**
 	 * Create and add field by property name and field model metadata.
 	 * Return field instance or null for non primary model properties.
-	 * @param string $modelPropName 
-	 * @param \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
-	 * @param bool $attrsAnotations
+	 * @param  string                                      $modelPropName 
+	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
+	 * @param  bool                                        $attrsAnotations
 	 * @return \MvcCore\Ext\Forms\Field|NULL
 	 */
 	protected function initModelFieldAdd ($modelPropName, $propMetaData, $attrsAnotations) {
@@ -245,9 +245,9 @@ trait ModelFormInitMethods {
 
 	/**
 	 * Create field by property name, field model metadata and form field anotation.
-	 * @param string $modelPropName 
-	 * @param \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
-	 * @param array $fieldsAttrs 
+	 * @param  string                                      $modelPropName 
+	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
+	 * @param  array                                       $fieldsAttrs 
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	protected function initModelFieldCreate ($modelPropName, $propMetaData, $fieldsAttrs) {
@@ -268,10 +268,10 @@ trait ModelFormInitMethods {
 
 	/**
 	 * Create field validators by property name, field model metadata and field instance.
-	 * @param string $modelPropName
-	 * @param \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
-	 * @param \MvcCore\Ext\Forms\Field $fieldInstance
-	 * @varam bool $attrsAnotations
+	 * @param  string                                      $modelPropName
+	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
+	 * @param  \MvcCore\Ext\Forms\Field                    $fieldInstance
+	 * @param  bool                                        $attrsAnotations
 	 * @return \MvcCore\Ext\Forms\Validator[]
 	 */
 	protected function initModelFieldValidators ($modelPropName, $propMetaData, $fieldInstance, $attrsAnotations) {

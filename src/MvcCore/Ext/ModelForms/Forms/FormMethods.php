@@ -17,7 +17,7 @@ trait FormMethods {
 	
 	/**
 	 * @inheritDocs
-	 * @param bool $submit `TRUE` if form is submitting, `FALSE` otherwise by default.
+	 * @param  bool $submit `TRUE` if form is submitting, `FALSE` otherwise by default.
 	 * @throws \RuntimeException No form id property defined or Form id `...` already defined.
 	 * @return void
 	 */
@@ -36,7 +36,7 @@ trait FormMethods {
 
 	/**
 	 * @inheritDocs
-	 * @param array $rawRequestParams optional
+	 * @param  array $rawRequestParams optional
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	public function Submit (array & $rawRequestParams = []) {

@@ -20,7 +20,7 @@ trait ModelFormSubmitMethods {
 	/**
 	 * Process standard low level submit process by parent `Submit()` method and
 	 * then resolve result success state and call model instance manipulation method.
-	 * @param array $rawRequestParams optional
+	 * @param  array $rawRequestParams optional
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	protected function submitModelForm (array & $rawRequestParams = []) {

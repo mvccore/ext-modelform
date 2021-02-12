@@ -35,9 +35,9 @@ trait ModelFormMethods {
 	/**
 	 * Log given `\Throwable` by MvcCore debug class and 
 	 * add (optionally translated) form error message displayed to client.
-	 * @param \Throwable $error 
-	 * @param string $clientMsg 
-	 * @param array $replacements
+	 * @param  \Throwable $error 
+	 * @param  string     $clientMsg 
+	 * @param  array      $replacements
 	 * @return void
 	 */
 	protected function logAndAddSubmitError ($error, $clientMsg, $replacements) {

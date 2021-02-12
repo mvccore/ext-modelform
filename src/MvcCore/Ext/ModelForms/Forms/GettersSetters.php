@@ -26,7 +26,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDocs
-	 * @param string $modelClassFullName
+	 * @param  string $modelClassFullName
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelClass ($modelClassFullName) {
@@ -38,7 +38,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDocs
-	 * @param \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
+	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelInstance ($modelInstance) {
@@ -70,7 +70,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDocs
-	 * @param int $modelPropsFlags
+	 * @param  int $modelPropsFlags
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelPropsFlags ($modelPropsFlags = 0) {
@@ -91,7 +91,7 @@ trait GettersSetters {
 
 	/**
 	 * @inheritDocs
-	 * @param \string[] $fieldsTypes 
+	 * @param  \string[] $fieldsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetFieldsTypes ($fieldsTypes) {
@@ -102,7 +102,7 @@ trait GettersSetters {
 
 	/**
 	 * @inheritDocs
-	 * @param \string[] $fieldsTypes,...
+	 * @param  \string[] $fieldsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddFieldsTypes ($fieldsTypes) {
@@ -124,7 +124,7 @@ trait GettersSetters {
 
 	/**
 	 * @inheritDocs
-	 * @param \string[] $validatorsTypes 
+	 * @param  \string[] $validatorsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetValidatorsTypes ($validatorsTypes) {
@@ -135,7 +135,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDocs
-	 * @param \string[] $validatorsTypes,...
+	 * @param  \string[] $validatorsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddValidatorsTypes ($validatorsTypes) {

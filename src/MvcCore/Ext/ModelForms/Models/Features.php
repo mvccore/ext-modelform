@@ -17,7 +17,7 @@ trait Features {
 	
 	/**
 	 * @inheritDocs
-	 * @param int $propsFlags
+	 * @param  int $propsFlags
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
 	 */
 	public static function GetDefaultPropsFlags ($propsFlags = 0) {
@@ -26,7 +26,7 @@ trait Features {
 
 	/**
 	 * @inheritDocs
-	 * @param int $propsFlags
+	 * @param  int $propsFlags
 	 * @throws \InvalidArgumentException
 	 * @return \string[][]|array
 	 */
@@ -63,7 +63,7 @@ trait Features {
 
 	/**
 	 * @inheritDocs
-	 * @param int $propsFlags
+	 * @param  int $propsFlags
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
 	 */
 	public static function GetFormsMetaData ($propsFlags = 0) {

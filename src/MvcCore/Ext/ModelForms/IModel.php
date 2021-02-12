@@ -23,7 +23,7 @@ interface IModel extends \MvcCore\Ext\Models\Db\IModel {
 
 	/**
 	 * Get form model metadata.
-	 * @param int $propsFlags
+	 * @param  int $propsFlags
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
 	 */
 	public static function GetFormsMetaData ($propsFlags = 0);

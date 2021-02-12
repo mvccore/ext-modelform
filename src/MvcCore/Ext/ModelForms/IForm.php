@@ -45,7 +45,7 @@ interface IForm {
 	 * When you creating new model record in database without configured 
 	 * form model instance, you have to call this method to configure 
 	 * at least model class type to init and submit model form properly.
-	 * @param string $modelClassFullName
+	 * @param  string $modelClassFullName
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelClass ($modelClassFullName);
@@ -57,7 +57,7 @@ interface IForm {
 	 * you want to edit or delete model record already in database, you have
 	 * to call this method to define model instance to init and submit model 
 	 * form properly.
-	 * @param \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
+	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelInstance (\MvcCore\Ext\ModelForms\IModel $modelInstance);
@@ -79,7 +79,7 @@ interface IForm {
 	 * Set default model properties flags.
 	 * This method is optional, it's not necessary to define model properties flags,
 	 * if there are defined default model properties flags in model class.
-	 * @param int $modelPropsFlags
+	 * @param  int $modelPropsFlags
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelPropsFlags ($modelPropsFlags = 0);
@@ -94,14 +94,14 @@ interface IForm {
 	/**
 	 * Set custom set of field classes to be able to decorate on model properties.
 	 * All previous field classes will be replaced with given values.
-	 * @param \string[] $fieldsTypes 
+	 * @param  \string[] $fieldsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetFieldsTypes ($fieldsTypes);
 
 	/**
 	 * Add custom set of field classes to be able to decorate on model properties.
-	 * @param \string[] $fieldsTypes,...
+	 * @param  \string[] $fieldsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddFieldsTypes ($fieldsTypes);
@@ -116,14 +116,14 @@ interface IForm {
 	/**
 	 * Set custom set of validator classes to be able to decorate on model properties.
 	 * All previous validator classes will be replaced with given values.
-	 * @param \string[] $validatorsTypes 
+	 * @param  \string[] $validatorsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetValidatorsTypes ($validatorsTypes);
 	
 	/**
 	 * Add custom set of validator classes to be able to decorate on model properties.
-	 * @param \string[] $validatorsTypes,...
+	 * @param  \string[] $validatorsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddValidatorsTypes ($validatorsTypes);
