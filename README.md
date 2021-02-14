@@ -11,6 +11,18 @@ MvcCore form extension to build forms by decorated model classes.
 composer require mvccore/ext-modelform
 ```
 
+## Features
+- Simply creating form instance with fields by decorated model properties  
+  without extending `\MvcCore\Ext\Form` or \MvcCore\Ext\ModelForms\Form` class.
+- Possibility to get model properties metadata by `\MvcCore\Ext\ModelForms\IModel::GetFormsMetaData()`.
+- Model properties decoration by PHP 8+ attributes or by PHP Docs tags in older PHP versions.
+- Possibility to decorate model property by any MvcCore form field with field options.
+- Possibility to decorate options loader for fields with options like Select or other...
+- Possibility to decorate model property by any MvcCore form validator(s) or by multiple validators with it's options.
+- Possibility to decorate local validation method for any field, validation method  
+  could be placed in form, controller or model as instance or static method, method context is configurable.
+- Possibility to extend model form or it's protected methods to customize fields initiatization.
+
 ## Basic Example
 
 ### PHP >= 8 With Attributes Decorations
@@ -42,16 +54,33 @@ use \MvcCore\Ext\Models\Db\Attrs;
 #[Attrs\Table('cds')]
 class Album extends \MvcCore\Ext\Models\Db\Models\MySql {
 
+	use \MvcCore\Ext\ModelForms\Models\Features;
+
 	#[Attrs\Column('id_album'), Attrs\KeyPrimary]
 	protected int $idAlbum;
 
-	#[Attrs\Column('title')]
+	#[Attrs\Column('title'), Attrs\KeyUnique]
+	#[Fields\Text([
+		'label'		=> 'Title',
+		'maxLength'	=> 200,
+	])]
 	protected string $title;
 
 	#[Attrs\Column('interpret')]
+	#[Fields\Text([
+		'label'		=> 'Interpret',
+		'maxLength'	=> 200,
+	])]
 	protected string $interpret;
 
 	#[Attrs\Column('year')]
+	#[Fields\Number([
+		'label'		=> 'Year',
+		'min'		=> 1900,
+		'max'		=> 2030,
+	])]
+	#[Validators\Clear]
+	#[Validators\IntNumber]
 	protected ?int $year;
 
 	// ...getters and setters could be anything...
@@ -63,9 +92,9 @@ class Album extends \MvcCore\Ext\Models\Db\Models\MySql {
 	public static function GetById (int $id): ?static {
 		return self::GetConnection()
 			->Prepare([
-				"SELECT c.*			",
-				"FROM cds c			",
-				"WHERE c.id_album = :id;	",
+				"SELECT c.*		",
+				"FROM cds c		",
+				"WHERE c.id_album = :id;",
 			])
 			->FetchOne([':id' => $id])
 			->ToInstance(static::class);
@@ -148,30 +177,67 @@ namespace App\Models;
  */
 class Album extends \MvcCore\Ext\Models\Db\Models\MySql {
 
-	/** @var int @column idAlbum @keyPrimary */
+	/**
+	 * @var int 
+	 * @column idAlbum 
+	 * @keyPrimary
+	 */
 	protected $idAlbum;
 
-	/** @var string @column title */
+	/**
+	 * @var string 
+	 * @column title
+	 * @keyUnique
+	 * @validator Text({
+	 *	"label"	    : "Title",
+	 *	"maxLength": 200,
+	 * })
+	 */
+	#[Fields\Text([
+		'label'		=> 'Title',
+		'maxLength'	=> 200,
+	])]
 	protected $title;
 
-	/** @var string @column interpret */
+	/**
+	 * @var string 
+	 * @column interpret
+	 * @validator Text({
+	 *	"label"	    : "Interpret",
+	 *	"maxLength": 200,
+	 * })
+	 */
 	protected $interpret;
 
-	/** @var ?int @column year */
+	/**
+	 * @var ?int 
+	 * @column year
+	 * @field Number({
+	 * 	"label":"Year",
+	 * 	"min"  :1900,
+	 * 	"max"  :2030
+	 * })
+	 * @validator Clear, IntNumber
+	 */
 	protected $year = NULL;
 
 	// ...getters and setters could be anything...
 
-	public function GetIdAlbum (): int {
+	/** @return int */
+	public function GetIdAlbum () {
 		return $this->idAlbum;
 	}
 
-	public static function GetById (int $id): ?static {
+	/**
+	 * @param int $id
+	 * @return \App\Models\Album|NULL
+	 */
+	public static function GetById ($id) {
 		return self::GetConnection()
 			->Prepare([
-				"SELECT c.*			",
-				"FROM cds c			",
-				"WHERE c.id_album = :id;	",
+				"SELECT c.*		",
+				"FROM cds c		",
+				"WHERE c.id_album = :id;",
 			])
 			->FetchOne([':id' => $id])
 			->ToInstance(static::class);
