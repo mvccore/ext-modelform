@@ -20,6 +20,13 @@ extends		\MvcCore\Ext\Form
 implements	\MvcCore\Ext\ModelForms\IForm {
 
 	use		\MvcCore\Ext\ModelForms\Forms\Features;
+	
+	/**
+	 * MvcCore Extension - ModelForm - version:
+	 * Comparison by PHP function version_compare();
+	 * @see http://php.net/manual/en/function.version-compare.php
+	 */
+	const VERSION = '5.1.3';
 
 	/**
 	 * @inheritDocs
