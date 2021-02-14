@@ -14,6 +14,10 @@
 namespace MvcCore\Ext\ModelForms;
 
 interface IModel extends \MvcCore\Ext\Models\Db\IModel {
+	
+	const PHP_DOCS_TAG_NAME_FIELD = '@field';
+
+	const PHP_DOCS_TAG_NAME_VALIDATOR = '@validator';
 
 	/**
 	 * Get array with primary keys fields names and with unique keys fields names.
