@@ -25,7 +25,7 @@ trait ModelFormInitMethods {
 	 */
 	protected function initModelForm ($submit = FALSE) {
 		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
-		$this->initModelFormId($submit);
+		if ($this->id === NULL) $this->initModelFormId($submit);
 		parent::Init($submit);
 		$this->initModelFields($submit);
 		$this->initModelButtons($submit);
