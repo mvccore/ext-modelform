@@ -128,4 +128,34 @@ interface IForm {
 	 */
 	public function AddValidatorsTypes ($validatorsTypes);
 
+
+	/**
+	 * Get model form submit button(s) field names.
+	 * @return array
+	 */
+	public function GetSubmitNames ();
+
+	/**
+	 * Set model form submit button(s) field names.
+	 * Array keys have to be: `create`, `edit` and `delete`.
+	 * @param array $submitNames 
+	 * @return \MvcCore\Ext\ModelForms\Form
+	 */
+	public function SetSubmitNames ($submitNames);
+
+
+	/**
+	 * Get model form submit button(s) field texts.
+	 * @return array
+	 */
+	public function GetSubmitTexts ();
+
+	/**
+	 * Set model form submit button(s) field texts.
+	 * Array keys have to be: `create`, `edit` and `delete`.
+	 * @param array $submitTexts 
+	 * @return \MvcCore\Ext\ModelForms\Form
+	 */
+	public function SetSubmitTexts ($submitTexts);
+
 }

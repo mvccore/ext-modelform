@@ -144,4 +144,46 @@ trait GettersSetters {
 		$this->validatorsTypes += $validatorsTypes;
 		return $this;
 	}
+
+
+	/**
+	 * @inheritDocs
+	 * @return array
+	 */
+	public function GetSubmitNames () {
+		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
+		return $this->submitNames;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param array $submitNames 
+	 * @return \MvcCore\Ext\ModelForms\Form
+	 */
+	public function SetSubmitNames ($submitNames) {
+		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
+		$this->submitNames = $submitNames;
+		return $this;
+	}
+
+
+	/**
+	 * @inheritDocs
+	 * @return array
+	 */
+	public function GetSubmitTexts () {
+		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
+		return $this->submitTexts;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param array $submitTexts 
+	 * @return \MvcCore\Ext\ModelForms\Form
+	 */
+	public function SetSubmitTexts ($submitTexts) {
+		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
+		$this->submitTexts = $submitTexts;
+		return $this;
+	}
 }
