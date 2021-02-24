@@ -38,7 +38,7 @@ trait Features {
 			$metaData, 
 			$primaryFieldsIndexes, 
 			$uniqueFieldsIndexes
-		) = self::getMetaData(
+		) = static::GetMetaData(
 			$propsFlags, [
 				\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_PRIMARY_KEY, 
 				\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_UNIQUE_KEY
@@ -73,7 +73,7 @@ trait Features {
 		list(
 			$metaData, 
 			$sourceCodeIndexes
-		) = self::getMetaData(
+		) = static::GetMetaData(
 			$propsFlags, [
 				\MvcCore\Ext\Models\Db\Model\IConstants::METADATA_BY_CODE
 			]
