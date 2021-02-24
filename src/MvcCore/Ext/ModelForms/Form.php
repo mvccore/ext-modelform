@@ -26,7 +26,7 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.1.4';
+	const VERSION = '5.1.5';
 
 	/**
 	 * @inheritDocs
