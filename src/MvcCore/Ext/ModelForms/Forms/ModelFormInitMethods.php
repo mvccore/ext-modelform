@@ -283,13 +283,14 @@ trait ModelFormInitMethods {
 	 * @return array `[string $fieldFullClassName, array $fieldCtorConfig]`
 	 */
 	protected function initModelFieldGetClassAndConfig ($modelPropName, $fieldsAttrs, $attrsAnotations) {
+		$fieldsAttrsKeys = array_keys($fieldsAttrs);
 		if ($attrsAnotations) {
-			$fieldFullClassName = array_key_first($fieldsAttrs);
+			$fieldFullClassName = $fieldsAttrsKeys[0];
 			$fieldCtorArgs = $fieldsAttrs[$fieldFullClassName];
 			$fieldCtorConfig = isset($fieldCtorArgs[0]) ? $fieldCtorArgs[0] : [];
 
 		} else {
-			$fieldTag = array_key_first($fieldsAttrs);
+			$fieldTag = $fieldsAttrsKeys[0];
 			$fieldCtorArgs = $fieldsAttrs[$fieldTag];
 			$fieldCtorArgsCnt = count($fieldCtorArgs);
 			$fieldTagFieldName = NULL;
