@@ -11,8 +11,11 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
+ */
 trait FormMethods {
 	
 	/**
@@ -22,7 +25,6 @@ trait FormMethods {
 	 * @return void
 	 */
 	public function Init ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		
 		// To define model class is necessary for each model form initialization.
 		//$this->SetModelClass(\App\Models\MyModelClass::class);
@@ -40,7 +42,6 @@ trait FormMethods {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	public function Submit (array & $rawRequestParams = []) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->submitModelForm($rawRequestParams);
 	}
 }

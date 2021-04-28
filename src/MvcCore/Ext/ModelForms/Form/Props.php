@@ -11,14 +11,17 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form
+ */
 trait Props {
 
 	/**
 	 * Model instance with database data to edit or delete, 
 	 * empty new instance or `NULL` to create.
-	 * @var \MvcCore\Ext\ModelForms\IModel|\MvcCore\Ext\Models\Model|NULL
+	 * @var \MvcCore\Ext\ModelForms\IModel|\MvcCore\Ext\Models\Db\Model|NULL
 	 */
 	protected $modelInstance = NULL;
 	

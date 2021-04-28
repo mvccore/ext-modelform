@@ -11,10 +11,13 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
 use \MvcCore\Ext\ModelForms\IForm as IModelForm;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
+ */
 trait ModelFormSubmitMethods {
 	
 	/**
@@ -24,7 +27,6 @@ trait ModelFormSubmitMethods {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	protected function submitModelForm (array & $rawRequestParams = []) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		parent::Submit($rawRequestParams);
 		if (
 			$this->result >= IModelForm::RESULT_SUCCESS_CREATE && 
@@ -63,7 +65,6 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitCreate () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($this->modelInstance === NULL) {
 			$modelType = new \ReflectionClass($this->modelClass);
 			$this->modelInstance = $modelType->newInstanceWithoutConstructor();
@@ -76,7 +77,6 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitEdit () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->modelInstance->Update($this->modelPropsFlags);
 	}
 
@@ -85,7 +85,6 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitDelete () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->modelInstance->Delete($this->modelPropsFlags);
 	}
 }

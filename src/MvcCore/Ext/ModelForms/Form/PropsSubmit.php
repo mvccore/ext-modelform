@@ -11,8 +11,11 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form
+ */
 trait PropsSubmit {
 	
 	/**

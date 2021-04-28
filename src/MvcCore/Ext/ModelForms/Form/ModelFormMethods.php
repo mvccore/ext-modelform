@@ -11,10 +11,13 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
 use \MvcCore\Ext\Forms\Fields;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
+ */
 trait ModelFormMethods {
 	
 	/**
@@ -22,7 +25,6 @@ trait ModelFormMethods {
 	 * @return bool
 	 */
 	protected function isModelNew () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($this->modelIsNew === NULL)
 			$this->modelIsNew = (
 				$this->modelInstance === NULL || (
@@ -41,7 +43,6 @@ trait ModelFormMethods {
 	 * @return void
 	 */
 	protected function logAndAddSubmitError ($error, $clientMsg, $replacements) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$debugClass = $this->controller->GetApplication()->GetDebugClass();
 		$debugClass::Log($error);
 

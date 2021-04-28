@@ -11,10 +11,13 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
 use \MvcCore\Ext\Forms\Fields;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
+ */
 trait ModelFormInitMethods {
 	
 	/**
@@ -24,7 +27,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelForm ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($this->id === NULL) $this->initModelFormId($submit);
 		parent::Init($submit);
 		$this->initModelFields($submit);
@@ -38,7 +40,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelButtons ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$submitNames = (object) $this->submitNames;
 		$submitTexts = (object) $this->submitTexts;
 		if ($this->isModelNew()) {
@@ -67,7 +68,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelFormId ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$formIdScBegin = str_replace('_', '\\', get_class($this));
 		foreach (static::$formNamespaces as $formNamespace) {
 			if (mb_strpos($formIdScBegin, $formNamespace) === 0) {
@@ -94,7 +94,6 @@ trait ModelFormInitMethods {
 	 * @return \string[]
 	 */
 	protected function initModelFormIdGetUniqueValue () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$modelClassFullName = $this->modelClassFullName;
 		$toolClass = $this->application->GetToolClass();
 		$toolClass::CheckClassInterface($modelClassFullName, $this->modelClassInterface, TRUE, TRUE);
@@ -125,7 +124,6 @@ trait ModelFormInitMethods {
 	 * @return \string[]
 	 */
 	protected function initModelFormIdGetUniqueValueByNames ($fieldsNames, $primaryKeys) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$uniqueFieldsValues = [];
 		$modelClassFullName = $this->modelClassFullName;
 		$phpWithTypes = PHP_VERSION_ID >= 70400;
@@ -158,7 +156,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelFormIdSetUp ($formIdBegin, $primaryFieldValue = NULL) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($primaryFieldValue === NULL) {
 			$this->SetId($formIdBegin . '-new');
 		} else {
@@ -172,7 +169,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelValues ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if (!$this->isModelNew() && !$submit) {
 			$formValues = $this->GetValues();
 			if (!$formValues && $this->modelInstance !== NULL) {
@@ -193,7 +189,6 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelFields ($submit = FALSE) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$modelClassFullName = $this->modelClassFullName;
 		/** @var $decoratedPropsMetaData \MvcCore\Ext\ModelForms\Models\PropertyMeta[] */
 		$decoratedPropsMetaData = $modelClassFullName::GetFormsMetaData($this->modelPropsFlags);
@@ -212,7 +207,6 @@ trait ModelFormInitMethods {
 	 * @return \MvcCore\Ext\Forms\Field|NULL
 	 */
 	protected function initModelFieldAdd ($modelPropName, $propMetaData, $attrsAnotations) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($attrsAnotations) {
 			$fieldsAttrs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, array_values($this->fieldsTypes), TRUE
@@ -259,7 +253,6 @@ trait ModelFormInitMethods {
 	 * @return \MvcCore\Ext\Forms\Field
 	 */
 	protected function initModelFieldCreate ($modelPropName, $propMetaData, $fieldsAttrs, $attrsAnotations) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		list ($fieldFullClassName, $fieldCtorConfig) = $this->initModelFieldGetClassAndConfig(
 			$modelPropName, $fieldsAttrs, $attrsAnotations
 		);
@@ -323,7 +316,6 @@ trait ModelFormInitMethods {
 	 * @return \MvcCore\Ext\Forms\Validator[]
 	 */
 	protected function initModelFieldValidators ($modelPropName, $propMetaData, $fieldInstance, $attrsAnotations) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$validatorsClassesAndCtorsConfigs = $this->initModelFieldValidatorsClassesAndConfigs(
 			$modelPropName, $attrsAnotations
 		);
@@ -348,7 +340,6 @@ trait ModelFormInitMethods {
 	 *                                 values are validators constructor config arrays.
 	 */
 	protected function initModelFieldValidatorsClassesAndConfigs ($modelPropName, $attrsAnotations) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if ($attrsAnotations) {
 			$validatorsClassesAndConfigs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, array_values($this->validatorsTypes), TRUE

@@ -11,8 +11,11 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Forms;
+namespace MvcCore\Ext\ModelForms\Form;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
+ */
 trait GettersSetters {
 
 	/**
@@ -20,7 +23,6 @@ trait GettersSetters {
 	 * @return string
 	 */
 	public function GetModelClass () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->modelClassFullName;
 	}
 	
@@ -30,7 +32,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelClass ($modelClassFullName) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->modelClassFullName = $modelClassFullName;
 		return $this;
 	}
@@ -42,7 +43,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelInstance ($modelInstance) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->modelInstance = $modelInstance;
 		if ($this->modelClassFullName === NULL)
 			$this->modelClassFullName = get_class($modelInstance);
@@ -54,7 +54,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\IModel|NULL
 	 */
 	public function GetModelInstance () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->modelInstance;
 	}
 
@@ -64,7 +63,6 @@ trait GettersSetters {
 	 * @return int
 	 */
 	public function GetModelPropsFlags () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->modelPropsFlags;
 	}
 	
@@ -74,7 +72,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelPropsFlags ($modelPropsFlags = 0) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->modelPropsFlags = $modelPropsFlags;
 		return $this;
 	}
@@ -85,7 +82,6 @@ trait GettersSetters {
 	 * @return \string[]
 	 */
 	public function GetFieldsTypes () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->fieldsTypes;
 	}
 
@@ -95,7 +91,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetFieldsTypes ($fieldsTypes) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->fieldsTypes = $fieldsTypes;
 		return $this;
 	}
@@ -106,7 +101,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddFieldsTypes ($fieldsTypes) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if (!is_array($fieldsTypes)) $fieldsTypes = func_get_args();
 		$this->fieldsTypes += $fieldsTypes;
 		return $this;
@@ -118,7 +112,6 @@ trait GettersSetters {
 	 * @return \string[]
 	 */
 	public function GetValidatorsTypes () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->validatorsTypes;
 	}
 
@@ -128,7 +121,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetValidatorsTypes ($validatorsTypes) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->validatorsTypes = $validatorsTypes;
 		return $this;
 	}
@@ -139,7 +131,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function AddValidatorsTypes ($validatorsTypes) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		if (!is_array($validatorsTypes)) $validatorsTypes = func_get_args();
 		$this->validatorsTypes += $validatorsTypes;
 		return $this;
@@ -151,7 +142,6 @@ trait GettersSetters {
 	 * @return array
 	 */
 	public function GetSubmitNames () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->submitNames;
 	}
 
@@ -161,7 +151,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetSubmitNames ($submitNames) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->submitNames = $submitNames;
 		return $this;
 	}
@@ -172,7 +161,6 @@ trait GettersSetters {
 	 * @return array
 	 */
 	public function GetSubmitTexts () {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		return $this->submitTexts;
 	}
 
@@ -182,7 +170,6 @@ trait GettersSetters {
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetSubmitTexts ($submitTexts) {
-		/** @var $this \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form */
 		$this->submitTexts = $submitTexts;
 		return $this;
 	}

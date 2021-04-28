@@ -11,8 +11,11 @@
  * @license		https://mvccore.github.io/docs/mvccore/5.0.0/LICENSE.md
  */
 
-namespace MvcCore\Ext\ModelForms\Models;
+namespace MvcCore\Ext\ModelForms\Model;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Model|\MvcCore\Ext\Models\Db\Model
+ */
 trait Features {
 	
 	/**
@@ -33,7 +36,6 @@ trait Features {
 	public static function GetUniqueFieldsNames ($propsFlags = 0) {
 		if ($propsFlags === 0)
 			$propsFlags = static::$defaultPropsFlags;
-		/** @var \MvcCore\Ext\Models\Model $this */
 		list(
 			$metaData, 
 			$primaryFieldsIndexes, 
@@ -67,7 +69,6 @@ trait Features {
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
 	 */
 	public static function GetFormsMetaData ($propsFlags = 0) {
-		/** @var \MvcCore\Ext\Models\Model $this */
 		if ($propsFlags === 0)
 			$propsFlags = static::$defaultPropsFlags;
 		list(
