@@ -33,7 +33,7 @@ trait Features {
 	public static function GetUniqueFieldsNames ($propsFlags = 0) {
 		if ($propsFlags === 0)
 			$propsFlags = static::$defaultPropsFlags;
-		/** @var $this \MvcCore\Ext\Models\Model */
+		/** @var \MvcCore\Ext\Models\Model $this */
 		list(
 			$metaData, 
 			$primaryFieldsIndexes, 
@@ -67,7 +67,7 @@ trait Features {
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
 	 */
 	public static function GetFormsMetaData ($propsFlags = 0) {
-		/** @var $this \MvcCore\Ext\Models\Model */
+		/** @var \MvcCore\Ext\Models\Model $this */
 		if ($propsFlags === 0)
 			$propsFlags = static::$defaultPropsFlags;
 		list(

@@ -268,7 +268,7 @@ trait ModelFormInitMethods {
 		$fieldCtorConfig['name'] = $modelPropName;
 		$fieldCtorConfig['required'] = !$propMetaData->AllowNulls && !$propMetaData->HasDefault;
 
-		/** @var $fieldInstance \MvcCore\Ext\Forms\Field */
+		/** @var \MvcCore\Ext\Forms\Field $fieldInstance */
 		$fieldInstance = $fieldType->newInstanceArgs([$fieldCtorConfig]);
 		
 		return $fieldInstance;
@@ -332,7 +332,7 @@ trait ModelFormInitMethods {
 		if (count($validatorsClassesAndCtorsConfigs) > 0) {
 			foreach	($validatorsClassesAndCtorsConfigs as $validatorFullClasName => $validatorCtorConfig) {
 				$validatorType = new \ReflectionClass($validatorFullClasName);
-				$validatorInstance = $validatorType->newInstanceArgs([$validatorCtorConfig]);
+				$validatorInstance = $validatorType->newInstanceArgs($validatorCtorConfig);
 				$fieldValidators[] = $validatorInstance;
 			}
 		}
