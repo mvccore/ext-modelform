@@ -16,5 +16,5 @@ namespace MvcCore\Ext\ModelForms;
 class		Model
 extends		\MvcCore\Model
 implements	\MvcCore\Ext\ModelForms\IModel {
-	use		\MvcCore\Ext\ModelForms\Models\Features;
+	use		\MvcCore\Ext\ModelForms\Model\Features;
 }
