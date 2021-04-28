@@ -19,14 +19,14 @@ class		Form
 extends		\MvcCore\Ext\Form
 implements	\MvcCore\Ext\ModelForms\IForm {
 
-	use		\MvcCore\Ext\ModelForms\Forms\Features;
+	use		\MvcCore\Ext\ModelForms\Form\Features;
 	
 	/**
 	 * MvcCore Extension - ModelForm - version:
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.1.7';
+	const VERSION = '5.1.8';
 
 	/**
 	 * @inheritDocs
