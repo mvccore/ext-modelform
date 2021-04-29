@@ -269,9 +269,9 @@ trait ModelFormInitMethods {
 
 	/**
 	 * Get property decorated field full class names and constructors configs.
-	 * @param  string                                      $modelPropName 
-	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $fieldsAttrs 
-	 * @param  bool                                        $attrsAnotations 
+	 * @param  string $modelPropName 
+	 * @param  array  $fieldsAttrs 
+	 * @param  bool   $attrsAnotations 
 	 * @throws \InvalidArgumentException 
 	 * @return array `[string $fieldFullClassName, array $fieldCtorConfig]`
 	 */
@@ -280,7 +280,7 @@ trait ModelFormInitMethods {
 		if ($attrsAnotations) {
 			$fieldFullClassName = $fieldsAttrsKeys[0];
 			$fieldCtorArgs = $fieldsAttrs[$fieldFullClassName];
-			$fieldCtorConfig = isset($fieldCtorArgs[0]) ? $fieldCtorArgs[0] : [];
+			$fieldCtorConfig = is_array($fieldCtorArgs) ? $fieldCtorArgs : [];
 
 		} else {
 			$fieldTag = $fieldsAttrsKeys[0];
