@@ -15,6 +15,9 @@ namespace MvcCore\Ext\ModelForms;
 
 use \MvcCore\Ext\Forms\Fields;
 
+/**
+ * @mixin \MvcCore\Ext\ModelForms\Form\Features
+ */
 class		Form
 extends		\MvcCore\Ext\Form
 implements	\MvcCore\Ext\ModelForms\IForm {
@@ -60,8 +63,6 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	public function Submit (array & $rawRequestParams = []) {
-		//parent::Submit($rawRequestParams);
-		// TODO: udelat submitnutí podle model formu - kdy se automaticky zavolá insert nebo update!
 		$this->submitModelForm($rawRequestParams);
 	}
 }
