@@ -44,17 +44,17 @@ trait ModelFormInitMethods {
 		$submitTexts = (object) $this->submitTexts;
 		if ($this->isModelNew()) {
 			$create = (new Fields\SubmitButton)
-				->SetCustomResultState(\MvcCore\Ext\IForm::RESULT_SUCCESS)
+				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_CREATE)
 				->SetName($submitNames->create)
 				->SetValue($submitTexts->create);
 			$this->AddField($create);
 		} else {
 			$save = (new Fields\SubmitButton)
-				->SetCustomResultState(\MvcCore\Ext\IForm::RESULT_SUCCESS)
+				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_EDIT)
 				->SetName($submitNames->edit)
 				->SetValue($submitTexts->edit);
 			$remove = (new Fields\SubmitButton)
-				->SetCustomResultState(\MvcCore\Ext\IForm::RESULT_SUCCESS)
+				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_DELETE)
 				->SetName($submitNames->delete)
 				->SetValue($submitTexts->delete);
 			$this->AddFields($save, $remove);
@@ -238,7 +238,7 @@ trait ModelFormInitMethods {
 		);
 		if ($fieldValidators)
 			$fieldInstance->AddValidators($fieldValidators);
-
+		
 		$this->AddField($fieldInstance);
 
 		return $fieldInstance;
