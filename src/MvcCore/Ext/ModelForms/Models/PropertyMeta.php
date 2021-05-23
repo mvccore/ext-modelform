@@ -84,7 +84,7 @@ class PropertyMeta {
 	public function __construct ($metaDataItem) {
 		list (
 			$this->IsPrivate,
-			$this->AlllowNulls,
+			$this->AllowNulls,
 			$this->Types, 
 			$this->Name, 
 			$this->DbColumnName, 
