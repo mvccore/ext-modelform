@@ -69,6 +69,7 @@ trait ModelFormSubmitMethods {
 			$modelType = new \ReflectionClass($this->modelClass);
 			$this->modelInstance = $modelType->newInstanceWithoutConstructor();
 		}
+		$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
 		return $this->modelInstance->Insert($this->modelPropsFlags);
 	}
 	
@@ -77,6 +78,7 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitEdit () {
+		$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
 		return $this->modelInstance->Update($this->modelPropsFlags);
 	}
 

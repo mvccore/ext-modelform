@@ -37,24 +37,10 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * @throws \RuntimeException No form id property defined or Form id `...` already defined.
 	 * @return void
 	 */
-	public function Init ($submit = FALSE): void {
+	public function Init ($submit = FALSE) {
 		parent::Init($submit = FALSE);
 		$this->SetModelPropsFlags(\MvcCore\IModel::PROPS_PROTECTED |\MvcCore\IModel::PROPS_INHERIT);
 		$this->initModelForm($submit);
-		if ($this->modelInstance === NULL) {
-			$create = (new Fields\SubmitButton)
-				->SetName('create')
-				->SetValue($this->submitsTexts[0]);
-			$this->AddField($create);
-		} else {
-			$save = (new Fields\SubmitButton)
-				->SetName('save')
-				->SetValue($this->submitsTexts[1]);
-			$remove = (new Fields\SubmitButton)
-				->SetName('remove')
-				->SetValue($this->submitsTexts[2]);
-			$this->AddField($save, $remove);
-		}
 	}
 
 	/**
@@ -63,6 +49,6 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	public function Submit (array & $rawRequestParams = []) {
-		$this->submitModelForm($rawRequestParams);
+		return $this->submitModelForm($rawRequestParams);
 	}
 }
