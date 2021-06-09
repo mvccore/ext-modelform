@@ -259,8 +259,9 @@ trait ModelFormInitMethods {
 		
 		$fieldType = new \ReflectionClass($fieldFullClassName);
 		$fieldCtorConfig['name'] = $modelPropName;
-		$fieldCtorConfig['required'] = !$propMetaData->AllowNulls && !$propMetaData->HasDefault;
-
+		if (!isset($fieldCtorConfig['required']))
+			$fieldCtorConfig['required'] = !$propMetaData->AllowNulls && !$propMetaData->HasDefault;
+		
 		/** @var \MvcCore\Ext\Forms\Field $fieldInstance */
 		$fieldInstance = $fieldType->newInstanceArgs([$fieldCtorConfig]);
 		
