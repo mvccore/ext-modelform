@@ -43,8 +43,12 @@ trait ModelFormMethods {
 	 * @return void
 	 */
 	protected function logAndAddSubmitError ($error, $clientMsg, $replacements) {
+		/** @var \MvcCore\Debug $debugClass */
 		$debugClass = $this->controller->GetApplication()->GetDebugClass();
 		$debugClass::Log($error);
+		
+		if ($this->controller->GetEnvironment()->IsDevelopment())
+			$debugClass::Exception($error);
 
 		$this->result = \MvcCore\Ext\IForm::RESULT_ERRORS;
 
