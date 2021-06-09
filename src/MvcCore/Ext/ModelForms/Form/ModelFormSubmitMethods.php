@@ -47,9 +47,13 @@ trait ModelFormSubmitMethods {
 					}
 				}
 			} catch (\Exception $e) { // backward compatibility
-				$this->logAndAddSubmitError($e, $clientErrorMessage, [$this->modelClass]);
+				$this->logAndAddSubmitError($e, $clientErrorMessage, [
+					isset($this->modelClass) ? $this->modelClass : NULL
+				]);
 			} catch (\Throwable $e) {
-				$this->logAndAddSubmitError($e, $clientErrorMessage, [$this->modelClass]);
+				$this->logAndAddSubmitError($e, $clientErrorMessage, [
+					isset($this->modelClass) ? $this->modelClass : NULL
+				]);
 			}
 		}
 		return [
@@ -69,8 +73,13 @@ trait ModelFormSubmitMethods {
 			$modelType = new \ReflectionClass($this->modelClass);
 			$this->modelInstance = $modelType->newInstanceWithoutConstructor();
 		}
-		$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
-		return $this->modelInstance->Insert($this->modelPropsFlags);
+		$modelValues = $this->submitGetModelValues();
+		if (count($modelValues) > 0) {
+			$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
+			return $this->modelInstance->Insert($this->modelPropsFlags);
+		} else {
+			return FALSE;
+		}
 	}
 	
 	/**
@@ -78,8 +87,13 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitEdit () {
-		$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
-		return $this->modelInstance->Update($this->modelPropsFlags);
+		$modelValues = $this->submitGetModelValues();
+		if (count($modelValues) > 0) {
+			$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
+			return $this->modelInstance->Update($this->modelPropsFlags);
+		} else {
+			return FALSE;
+		}
 	}
 
 	/**
@@ -88,5 +102,20 @@ trait ModelFormSubmitMethods {
 	 */
 	protected function submitDelete () {
 		return $this->modelInstance->Delete($this->modelPropsFlags);
+	}
+
+	/**
+	 * Filter all form submitted values only for values for model instance.
+	 * @return array
+	 */
+	protected function submitGetModelValues () {
+		$modelInstanceProps = array_keys($this->modelInstance->GetValues(
+			$this->modelPropsFlags, TRUE
+		));
+		$modelValues = [];
+		foreach ($modelInstanceProps as $modelInstanceProp) 
+			if (array_key_exists($modelInstanceProp, $this->values)) 
+				$modelValues[$modelInstanceProp] = $this->values[$modelInstanceProp];
+		return $modelValues;
 	}
 }
