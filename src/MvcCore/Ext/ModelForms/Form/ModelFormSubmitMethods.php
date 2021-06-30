@@ -48,11 +48,11 @@ trait ModelFormSubmitMethods {
 				}
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientErrorMessage, [
-					isset($this->modelClass) ? $this->modelClass : NULL
+					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
 				]);
 			} catch (\Throwable $e) {
 				$this->logAndAddSubmitError($e, $clientErrorMessage, [
-					isset($this->modelClass) ? $this->modelClass : NULL
+					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
 				]);
 			}
 		}
@@ -70,7 +70,7 @@ trait ModelFormSubmitMethods {
 	 */
 	protected function submitCreate () {
 		if ($this->modelInstance === NULL) {
-			$modelType = new \ReflectionClass($this->modelClass);
+			$modelType = new \ReflectionClass($this->modelClassFullName);
 			$this->modelInstance = $modelType->newInstanceWithoutConstructor();
 		}
 		$modelValues = $this->submitGetModelValues();

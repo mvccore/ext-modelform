@@ -38,7 +38,7 @@ interface IForm {
 	 * Get model class full name.
 	 * @return string
 	 */
-	public function GetModelClass ();
+	public function GetModelClassFullName ();
 	
 	/**
 	 * Set model class full name. 
@@ -48,7 +48,7 @@ interface IForm {
 	 * @param  string $modelClassFullName
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetModelClass ($modelClassFullName);
+	public function SetModelClassFullName ($modelClassFullName);
 
 
 	/**

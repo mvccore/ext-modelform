@@ -22,7 +22,7 @@ trait GettersSetters {
 	 * @inheritDocs
 	 * @return string
 	 */
-	public function GetModelClass () {
+	public function GetModelClassFullName () {
 		return $this->modelClassFullName;
 	}
 	
@@ -31,7 +31,7 @@ trait GettersSetters {
 	 * @param  string $modelClassFullName
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetModelClass ($modelClassFullName) {
+	public function SetModelClassFullName ($modelClassFullName) {
 		$this->modelClassFullName = $modelClassFullName;
 		return $this;
 	}
