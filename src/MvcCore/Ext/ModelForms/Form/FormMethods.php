@@ -27,7 +27,7 @@ trait FormMethods {
 	public function Init ($submit = FALSE) {
 		
 		// To define model class is necessary for each model form initialization.
-		//$this->SetModelClass(\App\Models\MyModelClass::class);
+		//$this->SetModelClassFullName(\App\Models\MyModelClass::class);
 		//$this->SetModelInstance(new \App\Models\MyModelClass);
 			
 		// This method is optional:
@@ -42,6 +42,11 @@ trait FormMethods {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	public function Submit (array & $rawRequestParams = []) {
-		return $this->submitModelForm($rawRequestParams);
+		$submitResult = $this->submitModelForm($rawRequestParams);
+		if ($this->result !== self::RESULT_ERRORS) {
+			$this->result = self::RESULT_SUCCESS;
+			$this->ClearSession();
+		}
+		return $submitResult;
 	}
 }
