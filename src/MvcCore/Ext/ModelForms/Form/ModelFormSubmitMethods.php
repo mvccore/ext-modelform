@@ -75,7 +75,7 @@ trait ModelFormSubmitMethods {
 		}
 		$modelValues = $this->submitGetModelValues();
 		if (count($modelValues) > 0) {
-			$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
+			$this->modelInstance->SetValues($modelValues, $this->modelPropsFlags);
 			return $this->modelInstance->Insert($this->modelPropsFlags);
 		} else {
 			return FALSE;
@@ -89,7 +89,7 @@ trait ModelFormSubmitMethods {
 	protected function submitEdit () {
 		$modelValues = $this->submitGetModelValues();
 		if (count($modelValues) > 0) {
-			$this->modelInstance->SetValues($this->values, $this->modelPropsFlags);
+			$this->modelInstance->SetValues($modelValues, $this->modelPropsFlags);
 			return $this->modelInstance->Update($this->modelPropsFlags);
 		} else {
 			return FALSE;
