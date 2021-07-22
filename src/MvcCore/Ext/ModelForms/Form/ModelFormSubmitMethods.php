@@ -46,6 +46,7 @@ trait ModelFormSubmitMethods {
 						$this->submitDelete();
 					}
 				}
+				$this->ClearSession();
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
