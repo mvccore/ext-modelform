@@ -38,24 +38,34 @@ trait ModelFormMethods {
 	 * Log given `\Throwable` by MvcCore debug class and 
 	 * add (optionally translated) form error message displayed to client.
 	 * @param  \Throwable $error 
-	 * @param  string     $clientMsg 
+	 * @param  string     $clientDefaultErrorMessage 
 	 * @param  array      $replacements
 	 * @return void
 	 */
-	protected function logAndAddSubmitError ($error, $clientMsg, $replacements) {
+	protected function logAndAddSubmitError ($error, $clientDefaultErrorMessage, $replacements) {
+		$prevError = $error->getPrevious();
+		if ($prevError === NULL) {
+			$clientErrorMessage = $clientDefaultErrorMessage;
+			$errorToLog = $error;
+		} else {
+			$clientErrorMessage = $error->getMessage();
+			$errorToLog = $prevError;
+		}
+
 		/** @var \MvcCore\Debug $debugClass */
 		$debugClass = $this->controller->GetApplication()->GetDebugClass();
-		$debugClass::Log($error);
+		$debugClass::Log($errorToLog);
 		
 		if ($this->controller->GetEnvironment()->IsDevelopment())
-			$debugClass::Exception($error);
+			$debugClass::Exception($errorToLog);
 
 		$this->result = \MvcCore\Ext\IForm::RESULT_ERRORS;
 
 		if ($this->translate) 
-			$clientMsg = $this->Translate($clientMsg);
+			$clientErrorMessage = $this->Translate($clientErrorMessage);
 		$formViewClass = $this->GetViewClass();
-		$clientMsg = $formViewClass::Format($clientMsg, $replacements);
-		$this->AddError($clientMsg);
+		$clientErrorMessage = $formViewClass::Format($clientErrorMessage, $replacements);
+
+		$this->AddError($clientErrorMessage);
 	}
 }

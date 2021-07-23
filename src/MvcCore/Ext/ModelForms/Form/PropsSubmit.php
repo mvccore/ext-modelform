@@ -37,4 +37,17 @@ trait PropsSubmit {
 		'edit'		=> 'Save',
 		'delete'	=> 'Delete',
 	];
+	
+	/**
+	 * Default client error message texts. Replacement `{0}` 
+	 * is always replaced by managed model full class name.
+	 * Array have keys `create`, `edit` and `delete` 
+	 * with not translated error message texts.
+	 * @var array
+	 */
+	protected $defaultClientErrorMessages = [
+		'create'	=> "Error when creating new database record `{0}`.",
+		'edit'		=> "Error when saving database record `{0}`.",
+		'delete'	=> "Error when removing database record `{0}`.",
+	];
 }

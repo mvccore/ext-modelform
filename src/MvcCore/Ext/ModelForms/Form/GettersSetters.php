@@ -150,7 +150,7 @@ trait GettersSetters {
 	 * @param array $submitNames 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetSubmitNames ($submitNames) {
+	public function SetSubmitNames (array $submitNames) {
 		$this->submitNames = $submitNames;
 		return $this;
 	}
@@ -169,8 +169,27 @@ trait GettersSetters {
 	 * @param array $submitTexts 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetSubmitTexts ($submitTexts) {
+	public function SetSubmitTexts (array $submitTexts) {
 		$this->submitTexts = $submitTexts;
+		return $this;
+	}
+
+
+	/**
+	 * @inheritDocs
+	 * @return array
+	 */
+	public function GetDefaultClientErrorMessages () {
+		return $this->defaultClientErrorMessages;
+	}
+
+	/**
+	 * @inheritDocs
+	 * @param array $defaultClientErrorMessages 
+	 * @return \MvcCore\Ext\ModelForms\Form
+	 */
+	public function SetDefaultClientErrorMessages (array $defaultClientErrorMessages) {
+		$this->defaultClientErrorMessages = $defaultClientErrorMessages;
 		return $this;
 	}
 }

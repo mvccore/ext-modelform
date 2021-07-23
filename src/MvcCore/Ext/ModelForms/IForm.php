@@ -46,7 +46,7 @@ interface IForm {
 	 * form model instance, you have to call this method to configure 
 	 * at least model class type to init and submit model form properly.
 	 * @param  string $modelClassFullName
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetModelClassFullName ($modelClassFullName);
 
@@ -58,7 +58,7 @@ interface IForm {
 	 * to call this method to define model instance to init and submit model 
 	 * form properly.
 	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetModelInstance (\MvcCore\Ext\ModelForms\IModel $modelInstance);
 	
@@ -80,7 +80,7 @@ interface IForm {
 	 * This method is optional, it's not necessary to define model properties flags,
 	 * if there are defined default model properties flags in model class.
 	 * @param  int $modelPropsFlags
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetModelPropsFlags ($modelPropsFlags = 0);
 
@@ -95,14 +95,14 @@ interface IForm {
 	 * Set custom set of field classes to be able to decorate on model properties.
 	 * All previous field classes will be replaced with given values.
 	 * @param  \string[] $fieldsTypes 
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetFieldsTypes ($fieldsTypes);
 
 	/**
 	 * Add custom set of field classes to be able to decorate on model properties.
 	 * @param  \string[] $fieldsTypes,...
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function AddFieldsTypes ($fieldsTypes);
 
@@ -117,14 +117,14 @@ interface IForm {
 	 * Set custom set of validator classes to be able to decorate on model properties.
 	 * All previous validator classes will be replaced with given values.
 	 * @param  \string[] $validatorsTypes 
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetValidatorsTypes ($validatorsTypes);
 	
 	/**
 	 * Add custom set of validator classes to be able to decorate on model properties.
 	 * @param  \string[] $validatorsTypes,...
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function AddValidatorsTypes ($validatorsTypes);
 
@@ -139,9 +139,9 @@ interface IForm {
 	 * Set model form submit button(s) field names.
 	 * Array keys have to be: `create`, `edit` and `delete`.
 	 * @param array $submitNames 
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function SetSubmitNames ($submitNames);
+	public function SetSubmitNames (array $submitNames);
 
 
 	/**
@@ -154,8 +154,27 @@ interface IForm {
 	 * Set model form submit button(s) field texts.
 	 * Array keys have to be: `create`, `edit` and `delete`.
 	 * @param array $submitTexts 
-	 * @return \MvcCore\Ext\ModelForms\Form
+	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function SetSubmitTexts ($submitTexts);
+	public function SetSubmitTexts (array $submitTexts);
 
+
+	/**
+	 * Get default client error message texts. Replacement `{0}` 
+	 * is always replaced by managed model full class name.
+	 * returned array have keys `create`, `edit` and `delete` 
+	 * with not translated error message texts.
+	 * @return array
+	 */
+	public function GetDefaultClientErrorMessages ();
+
+	/**
+	 * Set default client error message texts. Replacement `{0}` 
+	 * is always replaced by managed model full class name.
+	 * Given array must have keys `create`, `edit` and `delete` 
+	 * with not translated error message texts.
+	 * @param array $defaultClientErrorMessages 
+	 * @return \MvcCore\Ext\ModelForms\IForm
+	 */
+	public function SetDefaultClientErrorMessages (array $defaultClientErrorMessages);
 }

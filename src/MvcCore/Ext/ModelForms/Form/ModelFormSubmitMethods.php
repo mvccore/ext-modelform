@@ -32,27 +32,27 @@ trait ModelFormSubmitMethods {
 			$this->result >= IModelForm::RESULT_SUCCESS_CREATE && 
 			$this->result <= IModelForm::RESULT_SUCCESS_DELETE
 		) {
-			$clientErrorMessage = NULL;
+			$clientDefaultErrorMessage = NULL;
 			try {
 				if ($this->isModelNew() && $this->result === IModelForm::RESULT_SUCCESS_CREATE) {
-					$clientErrorMessage = "Error when creating new database record `{0}`.";
+					$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
 					$this->submitCreate();
 				} else if ($this->modelInstance !== NULL) {
 					if ($this->result === IModelForm::RESULT_SUCCESS_EDIT) {
-						$clientErrorMessage = "Error when saving database record `{0}`.";
+						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
 						$this->submitEdit();
 					} else if ($this->result === IModelForm::RESULT_SUCCESS_DELETE) {
-						$clientErrorMessage = "Error when removing database record `{0}`.";
+						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
 						$this->submitDelete();
 					}
 				}
 				$this->ClearSession();
 			} catch (\Exception $e) { // backward compatibility
-				$this->logAndAddSubmitError($e, $clientErrorMessage, [
+				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
 				]);
 			} catch (\Throwable $e) {
-				$this->logAndAddSubmitError($e, $clientErrorMessage, [
+				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
 				]);
 			}
