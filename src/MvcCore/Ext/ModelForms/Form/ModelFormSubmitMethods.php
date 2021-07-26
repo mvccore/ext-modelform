@@ -27,7 +27,25 @@ trait ModelFormSubmitMethods {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	protected function submitModelForm (array & $rawRequestParams = []) {
-		parent::Submit($rawRequestParams);
+		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_INITIALIZED) 
+			$this->Init(TRUE);
+		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
+			$this->PreDispatch(TRUE);
+		if (!$rawRequestParams) 
+			$rawRequestParams = $this->request->GetParams(FALSE);
+		$this->SubmitSetStartResultState($rawRequestParams);
+		$deleting = FALSE;
+		if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
+			$deleting = $this->result === IModelForm::RESULT_SUCCESS_DELETE;
+			if ($deleting) 
+				foreach ($this->fields as $field) 
+					$field->SetRequired(FALSE);
+			$this
+				->SubmitCsrfTokens($rawRequestParams)
+				->SubmitAllFields($rawRequestParams);
+		}
+		if ($deleting)
+			$this->result = IModelForm::RESULT_SUCCESS_DELETE;
 		if (
 			$this->result >= IModelForm::RESULT_SUCCESS_CREATE && 
 			$this->result <= IModelForm::RESULT_SUCCESS_DELETE
@@ -46,7 +64,6 @@ trait ModelFormSubmitMethods {
 						$this->submitDelete();
 					}
 				}
-				$this->ClearSession();
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
@@ -57,10 +74,17 @@ trait ModelFormSubmitMethods {
 				]);
 			}
 		}
+		$values = $this->values;
+		$errors = $this->errors;
+		if ($this->request === \MvcCore\Ext\IForm::RESULT_ERRORS) {
+			$this->SaveSession();
+		} else {
+			$this->ClearSession();
+		}
 		return [
 			$this->result,
-			$this->values,
-			$this->errors,
+			$values,
+			$errors,
 		];
 	}
 
