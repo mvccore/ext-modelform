@@ -63,8 +63,8 @@ trait ModelFormMethods {
 
 		if ($this->translate) 
 			$clientErrorMessage = $this->Translate($clientErrorMessage);
-		$formViewClass = $this->GetViewClass();
-		$clientErrorMessage = $formViewClass::Format($clientErrorMessage, $replacements);
+		$viewClass = $this->GetViewClass();
+		$clientErrorMessage = $viewClass::Format($clientErrorMessage, $replacements);
 
 		$this->AddError($clientErrorMessage);
 	}
