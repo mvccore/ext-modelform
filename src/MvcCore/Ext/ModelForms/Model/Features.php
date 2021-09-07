@@ -20,18 +20,16 @@ trait Features {
 	
 	/**
 	 * @inheritDocs
-	 * @param  int $propsFlags
-	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
+	 * @return int
 	 */
-	public static function GetDefaultPropsFlags ($propsFlags = 0) {
+	public static function GetDefaultPropsFlags () {
 		return static::$defaultPropsFlags;
 	}
 
 	/**
 	 * @inheritDocs
 	 * @param  int $propsFlags
-	 * @throws \InvalidArgumentException
-	 * @return \string[][]|array
+	 * @return \string[][]|NULL[]|array
 	 */
 	public static function GetUniqueFieldsNames ($propsFlags = 0) {
 		if ($propsFlags === 0)
@@ -66,7 +64,7 @@ trait Features {
 	/**
 	 * @inheritDocs
 	 * @param  int $propsFlags
-	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
+	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]|array
 	 */
 	public static function GetFormsMetaData ($propsFlags = 0) {
 		if ($propsFlags === 0)
