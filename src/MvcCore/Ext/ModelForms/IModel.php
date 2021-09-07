@@ -20,21 +20,22 @@ interface IModel extends \MvcCore\Ext\Models\Db\IModel {
 	const PHP_DOCS_TAG_NAME_VALIDATOR = '@validator';
 
 	/**
-	 * Get array with primary keys fields names and with unique keys fields names.
-	 * @return \string[][]|array
-	 */
-	public static function GetUniqueFieldsNames ();
-
-	/**
-	 * Get form model metadata.
-	 * @param  int $propsFlags
-	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]
-	 */
-	public static function GetFormsMetaData ($propsFlags = 0);
-
-	/**
 	 * Get default form model properties flags.
 	 * @return int
 	 */
 	public static function GetDefaultPropsFlags ();
+
+	/**
+	 * Get array with primary keys fields names and with unique keys fields names.
+	 * @param  int $propsFlags
+	 * @return \string[][]|NULL[]|array
+	 */
+	public static function GetUniqueFieldsNames ($propsFlags = 0);
+
+	/**
+	 * Get form model metadata.
+	 * @param  int $propsFlags
+	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]|array
+	 */
+	public static function GetFormsMetaData ($propsFlags = 0);
 }
