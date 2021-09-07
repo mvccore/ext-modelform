@@ -103,9 +103,12 @@ trait ModelFormInitMethods {
 			$uniqueKeyFields
 		) = $modelClassFullName::GetUniqueFieldsNames();
 
-		if (count($primaryKeyFields) > 0) 
+		$hasPrimaryKeyFields = is_array($primaryKeyFields) && count($primaryKeyFields) > 0;
+		$hasUniqueKeyFields = is_array($uniqueKeyFields) && count($uniqueKeyFields) > 0;
+		$uniqueFieldsValues = [];
+		if ($hasPrimaryKeyFields) 
 			$uniqueFieldsValues = $this->initModelFormIdGetUniqueValueByNames($primaryKeyFields, TRUE);
-		if (count($uniqueFieldsValues) === 0 && count($uniqueKeyFields) > 0) 
+		if (count($uniqueFieldsValues) === 0 && $hasUniqueKeyFields) 
 			$uniqueFieldsValues = $this->initModelFormIdGetUniqueValueByNames($primaryKeyFields, FALSE);
 
 		if (count($uniqueFieldsValues) === 0) throw new \RuntimeException(
