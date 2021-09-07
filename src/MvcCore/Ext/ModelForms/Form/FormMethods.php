@@ -44,7 +44,7 @@ trait FormMethods {
 	public function Submit (array & $rawRequestParams = []) {
 		$submitResult = $this->submitModelForm($rawRequestParams);
 		if ($this->result !== self::RESULT_ERRORS) {
-			$this->result = self::RESULT_SUCCESS;
+			$this->result &= self::RESULT_SUCCESS;
 			$this->ClearSession();
 		}
 		return $submitResult;
