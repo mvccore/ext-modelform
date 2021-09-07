@@ -14,24 +14,37 @@
 namespace MvcCore\Ext\ModelForms;
 
 interface IForm {
-
+	
 	/**
 	 * Success result form state to create model instance.
 	 * @var int
 	 */
-	const RESULT_SUCCESS_CREATE	= 4;
+	const RESULT_SUCCESS_CREATE				= 8;
 	
 	/**
 	 * Success result form state to edit model instance.
 	 * @var int
 	 */
-	const RESULT_SUCCESS_EDIT	= 5;
+	const RESULT_SUCCESS_EDIT				= 16;
 	
 	/**
 	 * Success result form state to delete model instance.
 	 * @var int
 	 */
-	const RESULT_SUCCESS_DELETE	= 6;
+	const RESULT_SUCCESS_DELETE				= 32;
+	
+	/**
+	 * Success result form state when model instance has been change.
+	 * @var int
+	 */
+	const RESULT_SUCCESS_MODEL_CHANGED		= 64;
+
+	/**
+	 * Success result form state when model instance has without changes.
+	 * (form has been submitted without changed values).
+	 * @var int
+	 */
+	const RESULT_SUCCESS_MODEL_NOT_CHANGED	= 128;
 
 
 	/**

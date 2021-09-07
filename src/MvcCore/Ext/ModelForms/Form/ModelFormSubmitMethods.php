@@ -36,7 +36,7 @@ trait ModelFormSubmitMethods {
 		$this->SubmitSetStartResultState($rawRequestParams);
 		$deleting = FALSE;
 		if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
-			$deleting = $this->result === IModelForm::RESULT_SUCCESS_DELETE;
+			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
 			if ($deleting) 
 				foreach ($this->fields as $field) 
 					$field->SetRequired(FALSE);
@@ -47,23 +47,27 @@ trait ModelFormSubmitMethods {
 		if ($deleting)
 			$this->result = IModelForm::RESULT_SUCCESS_DELETE;
 		if (
-			$this->result >= IModelForm::RESULT_SUCCESS_CREATE && 
-			$this->result <= IModelForm::RESULT_SUCCESS_DELETE
+			($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0 || 
+			($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0 || 
+			($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0 
 		) {
 			$clientDefaultErrorMessage = NULL;
 			try {
-				if ($this->isModelNew() && $this->result === IModelForm::RESULT_SUCCESS_CREATE) {
+				if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
 					$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
-					$this->submitCreate();
+					$changed = $this->submitCreate();
 				} else if ($this->modelInstance !== NULL) {
-					if ($this->result === IModelForm::RESULT_SUCCESS_EDIT) {
+					if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
 						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
-						$this->submitEdit();
-					} else if ($this->result === IModelForm::RESULT_SUCCESS_DELETE) {
+						$changed = $this->submitEdit();
+					} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
 						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
-						$this->submitDelete();
+						$changed = $this->submitDelete();
 					}
 				}
+				$this->result |= $changed 
+					? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
+					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED;
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
