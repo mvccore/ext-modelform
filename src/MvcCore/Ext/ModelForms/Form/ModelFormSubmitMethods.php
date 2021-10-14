@@ -65,9 +65,9 @@ trait ModelFormSubmitMethods {
 						$changed = $this->submitDelete();
 					}
 				}
-				$this->result |= $changed 
+				$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
 					? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
-					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED;
+					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
