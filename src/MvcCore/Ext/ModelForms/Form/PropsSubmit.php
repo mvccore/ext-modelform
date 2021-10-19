@@ -13,10 +13,22 @@
 
 namespace MvcCore\Ext\ModelForms\Form;
 
+use \MvcCore\Ext\ModelForms\IForm as IModelForm;
+
 /**
  * @mixin \MvcCore\Ext\ModelForms\Form
  */
 trait PropsSubmit {
+
+	/**
+	 * Model form submit result values for create, edit and delete.
+	 * @var \int[]
+	 */
+	protected static $submitResultManipulationFlags = [
+		IModelForm::RESULT_SUCCESS_CREATE,
+		IModelForm::RESULT_SUCCESS_EDIT,
+		IModelForm::RESULT_SUCCESS_DELETE
+	];
 	
 	/**
 	 * Default model form submit button(s) field names.

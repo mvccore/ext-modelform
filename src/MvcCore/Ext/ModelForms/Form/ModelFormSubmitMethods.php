@@ -46,28 +46,10 @@ trait ModelFormSubmitMethods {
 		}
 		if ($deleting)
 			$this->result = IModelForm::RESULT_SUCCESS_DELETE;
-		if (
-			($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0 || 
-			($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0 || 
-			($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0 
-		) {
+		if ($this->submitHasResultManipulationFlag($this->result)) {
 			$clientDefaultErrorMessage = NULL;
 			try {
-				if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
-					$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
-					$changed = $this->submitCreate();
-				} else if ($this->modelInstance !== NULL) {
-					if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
-						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
-						$changed = $this->submitEdit();
-					} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
-						$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
-						$changed = $this->submitDelete();
-					}
-				}
-				$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
-					? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
-					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
+				$clientDefaultErrorMessage = $this->submitModelFormExecManipulations();
 			} catch (\Exception $e) { // backward compatibility
 				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
@@ -90,6 +72,30 @@ trait ModelFormSubmitMethods {
 			$values,
 			$errors,
 		];
+	}
+
+	/**
+	 * Execute submit manipulation methods.
+	 * @return string|NULL
+	 */
+	protected function submitModelFormExecManipulations () {
+		$changed = FALSE;
+		if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
+			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
+			$changed = $this->submitCreate();
+		} else if ($this->modelInstance !== NULL) {
+			if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
+				$changed = $this->submitEdit();
+			} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
+				$changed = $this->submitDelete();
+			}
+		}
+		$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
+			? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
+			: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
+		return $clientDefaultErrorMessage;
 	}
 
 	/**
@@ -146,5 +152,21 @@ trait ModelFormSubmitMethods {
 			if (array_key_exists($modelInstanceProp, $this->values)) 
 				$modelValues[$modelInstanceProp] = $this->values[$modelInstanceProp];
 		return $modelValues;
+	}
+
+	/**
+	 * Check if form submit result value has model form result manipulation flag.
+	 * @param  bool $submitResult 
+	 * @return bool
+	 */
+	protected function submitHasResultManipulationFlag ($submitResult) {
+		$result = FALSE;
+		foreach (static::$submitResultManipulationFlags as $submitManipulationFlag) {
+			if (($submitResult & $submitManipulationFlag) != 0) {
+				$result = TRUE;
+				break;
+			}
+		}
+		return $result;
 	}
 }
