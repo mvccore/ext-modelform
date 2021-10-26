@@ -44,12 +44,12 @@ trait ModelFormMethods {
 	 */
 	protected function logAndAddSubmitError ($error, $clientDefaultErrorMessage, $replacements) {
 		$prevError = $error->getPrevious();
-		if ($prevError === NULL) {
+		if ($prevError === NULL && $clientDefaultErrorMessage !== NULL) {
 			$clientErrorMessage = $clientDefaultErrorMessage;
 			$errorToLog = $error;
 		} else {
 			$clientErrorMessage = $error->getMessage();
-			$errorToLog = $prevError;
+			$errorToLog = $prevError !== NULL ? $prevError : $error;
 		}
 
 		/** @var \MvcCore\Debug $debugClass */
