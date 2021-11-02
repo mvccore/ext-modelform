@@ -148,9 +148,18 @@ trait ModelFormSubmitMethods {
 			$this->modelPropsFlags, TRUE
 		));
 		$modelValues = [];
-		foreach ($modelInstanceProps as $modelInstanceProp) 
-			if (array_key_exists($modelInstanceProp, $this->values)) 
-				$modelValues[$modelInstanceProp] = $this->values[$modelInstanceProp];
+		foreach ($modelInstanceProps as $modelInstanceProp) {
+			$field = $this->GetField($modelInstanceProp);
+			if (
+				$field === NULL || 
+				!array_key_exists($modelInstanceProp, $this->values) || (
+					$field instanceof \MvcCore\Ext\Forms\Fields\IVisibleField && (
+						$field->GetDisabled() || $field->GetReadonly()
+					)
+				)
+			) continue;
+			$modelValues[$modelInstanceProp] = $this->values[$modelInstanceProp];
+		}
 		return $modelValues;
 	}
 
