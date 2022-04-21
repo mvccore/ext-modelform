@@ -50,10 +50,6 @@ trait ModelFormSubmitMethods {
 			$clientDefaultErrorMessage = NULL;
 			try {
 				$clientDefaultErrorMessage = $this->submitModelFormExecManipulations();
-			} catch (\Exception $e) { // backward compatibility
-				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
-					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
-				]);
 			} catch (\Throwable $e) {
 				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
 					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
