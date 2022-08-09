@@ -40,28 +40,32 @@ trait ModelFormSubmitMethods {
 			if ($deleting) 
 				foreach ($this->fields as $field) 
 					$field->SetRequired(FALSE);
-			$this
-				->SubmitCsrfTokens($rawRequestParams)
-				->SubmitAllFields($rawRequestParams);
+			
+			$this->application->ValidateCsrfProtection();
+			$this->SubmitCsrfTokens($rawRequestParams);// deprecated, but working in all browsers
+			if (!$this->application->GetTerminated())
+				$this->SubmitAllFields($rawRequestParams);
 		}
-		if ($deleting)
-			$this->result = IModelForm::RESULT_SUCCESS_DELETE;
-		if ($this->submitHasResultManipulationFlag($this->result)) {
-			$clientDefaultErrorMessage = NULL;
-			try {
-				$clientDefaultErrorMessage = $this->submitModelFormExecManipulations();
-			} catch (\Throwable $e) {
-				$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
-					isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
-				]);
+		if (!$this->application->GetTerminated()) {
+			if ($deleting)
+				$this->result = IModelForm::RESULT_SUCCESS_DELETE;
+			if ($this->submitHasResultManipulationFlag($this->result)) {
+				$clientDefaultErrorMessage = NULL;
+				try {
+					$clientDefaultErrorMessage = $this->submitModelFormExecManipulations();
+				} catch (\Throwable $e) {
+					$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
+						isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
+					]);
+				}
 			}
-		}
-		$values = $this->values;
-		$errors = $this->errors;
-		if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
-			$this->SaveSession();
-		} else {
-			$this->ClearSession();
+			$values = $this->values;
+			$errors = $this->errors;
+			if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
+				$this->SaveSession();
+			} else {
+				$this->ClearSession();
+			}
 		}
 		return [
 			$this->result,

@@ -195,8 +195,7 @@ trait ModelFormInitMethods {
 		$modelClassFullName = $this->modelClassFullName;
 		/** @var $decoratedPropsMetaData \MvcCore\Ext\ModelForms\Models\PropertyMeta[] */
 		$decoratedPropsMetaData = $modelClassFullName::GetFormsMetaData($this->modelPropsFlags);
-		$toolClass = $this->GetController()->GetApplication()->GetToolClass();
-		$attrsAnotations = $toolClass::GetAttributesAnotations();
+		$attrsAnotations = $this->GetController()->GetApplication()->GetAttributesAnotations();
 		foreach ($decoratedPropsMetaData as $modelPropName => $propMetaData) 
 			$this->initModelFieldAdd($modelPropName, $propMetaData, $attrsAnotations);
 	}
