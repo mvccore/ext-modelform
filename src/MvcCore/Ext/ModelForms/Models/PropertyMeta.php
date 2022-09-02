@@ -46,6 +46,12 @@ class PropertyMeta {
 	public $DbColumnName;
 
 	/**
+	 * Property additional parsing data.
+	 * @var \string[]|NULL
+	 */
+	public $ParserData;
+
+	/**
 	 * Property additional formating data.
 	 * @var \string[]|NULL
 	 */
@@ -88,6 +94,7 @@ class PropertyMeta {
 			$this->Types, 
 			$this->Name, 
 			$this->DbColumnName, 
+			$this->ParserData, 
 			$this->FormatData, 
 			$this->IsPrimary, 
 			$this->AutoIncrement, 
