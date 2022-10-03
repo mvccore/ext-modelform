@@ -20,14 +20,6 @@ trait Features {
 	
 	/**
 	 * @inheritDocs
-	 * @return int
-	 */
-	public static function GetDefaultPropsFlags () {
-		return static::$defaultPropsFlags;
-	}
-
-	/**
-	 * @inheritDocs
 	 * @param  int $propsFlags
 	 * @return \string[][]|NULL[]|array
 	 */

@@ -20,12 +20,6 @@ interface IModel extends \MvcCore\Ext\Models\Db\IModel {
 	const PHP_DOCS_TAG_NAME_VALIDATOR = '@validator';
 
 	/**
-	 * Get default form model properties flags.
-	 * @return int
-	 */
-	public static function GetDefaultPropsFlags ();
-
-	/**
 	 * Get array with primary keys fields names and with unique keys fields names.
 	 * @param  int $propsFlags
 	 * @return \string[][]|NULL[]|array
