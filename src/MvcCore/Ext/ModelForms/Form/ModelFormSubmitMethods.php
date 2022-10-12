@@ -59,8 +59,6 @@ trait ModelFormSubmitMethods {
 					]);
 				}
 			}
-			$values = $this->values;
-			$errors = $this->errors;
 			if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
 				$this->SaveSession();
 			} else {
@@ -69,8 +67,8 @@ trait ModelFormSubmitMethods {
 		}
 		return [
 			$this->result,
-			$values,
-			$errors,
+			$this->values,
+			$this->errors,
 		];
 	}
 
