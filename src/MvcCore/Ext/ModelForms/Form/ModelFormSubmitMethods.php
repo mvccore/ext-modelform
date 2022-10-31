@@ -31,19 +31,28 @@ trait ModelFormSubmitMethods {
 			$this->Init(TRUE);
 		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
 			$this->PreDispatch(TRUE);
-		if (!$rawRequestParams) 
-			$rawRequestParams = $this->request->GetParams(FALSE);
+		$submitWithParams = count($rawRequestParams) > 0;
+		if (!$submitWithParams) {
+			$sourceType = $this->method === \MvcCore\Ext\IForm::METHOD_GET
+				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
+				: \MvcCore\IRequest::PARAM_TYPE_INPUT;
+			$rawRequestParams = $this->request->GetParams(
+				FALSE, array_keys($this->fields), $sourceType
+			);
+		}
 		$this->SubmitSetStartResultState($rawRequestParams);
 		$deleting = FALSE;
-		if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
+		$this->SubmitSetStartResultState($rawRequestParams);
+		if ($submitWithParams) {
 			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
-			if ($deleting) 
-				foreach ($this->fields as $field) 
-					$field->SetRequired(FALSE);
-			
+			if ($deleting) foreach ($this->fields as $field) $field->SetRequired(FALSE);
+			$this->SubmitAllFields($rawRequestParams);
+		} else if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
+			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
+			if ($deleting) foreach ($this->fields as $field) $field->SetRequired(FALSE);
 			$this->application->ValidateCsrfProtection();
 			$this->SubmitCsrfTokens($rawRequestParams);// deprecated, but working in all browsers
-			if (!$this->application->GetTerminated())
+			if (!$this->application->GetTerminated()) 
 				$this->SubmitAllFields($rawRequestParams);
 		}
 		if (!$this->application->GetTerminated()) {
