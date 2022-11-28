@@ -196,8 +196,10 @@ trait ModelFormInitMethods {
 		/** @var $decoratedPropsMetaData \MvcCore\Ext\ModelForms\Models\PropertyMeta[] */
 		$decoratedPropsMetaData = $modelClassFullName::GetFormsMetaData($this->modelPropsFlags);
 		$attrsAnotations = $this->GetController()->GetApplication()->GetAttributesAnotations();
-		foreach ($decoratedPropsMetaData as $modelPropName => $propMetaData) 
-			$this->initModelFieldAdd($modelPropName, $propMetaData, $attrsAnotations);
+		foreach ($decoratedPropsMetaData as $modelPropName => $propMetaData) {
+			$field = $this->initModelField2Add($modelPropName, $propMetaData, $attrsAnotations);
+			if ($field !== NULL) $this->AddField($field);
+		}
 	}
 	
 	/**
@@ -208,7 +210,7 @@ trait ModelFormInitMethods {
 	 * @param  bool                                        $attrsAnotations
 	 * @return \MvcCore\Ext\Forms\Field|NULL
 	 */
-	protected function initModelFieldAdd ($modelPropName, $propMetaData, $attrsAnotations) {
+	protected function initModelField2Add ($modelPropName, $propMetaData, $attrsAnotations) {
 		if ($attrsAnotations) {
 			$fieldsAttrs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, array_values($this->fieldsTypes), TRUE
@@ -241,8 +243,6 @@ trait ModelFormInitMethods {
 		if ($fieldValidators)
 			$fieldInstance->AddValidators($fieldValidators);
 		
-		$this->AddField($fieldInstance);
-
 		return $fieldInstance;
 	}
 
