@@ -93,14 +93,12 @@ trait ModelFormSubmitMethods {
 		if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
 			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
 			$changed = $this->submitCreate();
-		} else if ($this->modelInstance !== NULL) {
-			if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
-				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
-				$changed = $this->submitEdit();
-			} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
-				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
-				$changed = $this->submitDelete();
-			}
+		} else if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
+			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
+			$changed = $this->submitEdit();
+		} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
+			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
+			$changed = $this->submitDelete();
 		}
 		$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
 			? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
@@ -132,6 +130,8 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitEdit () {
+		if ($this->modelInstance === NULL)
+			throw new \RuntimeException("Model instance to edit not initialized.");
 		$modelValues = $this->submitGetModelValues();
 		if (count($modelValues) > 0) {
 			$this->modelInstance->SetValues($modelValues, $this->modelPropsFlags);
@@ -146,6 +146,8 @@ trait ModelFormSubmitMethods {
 	 * @return bool
 	 */
 	protected function submitDelete () {
+		if ($this->modelInstance === NULL)
+			throw new \RuntimeException("Model instance to delete not initialized.");
 		return $this->modelInstance->Delete($this->modelPropsFlags);
 	}
 
