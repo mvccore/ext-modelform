@@ -43,7 +43,6 @@ trait ModelFormSubmitMethods {
 				FALSE, $paramsKeys, $sourceType
 			);
 		}
-		$this->SubmitSetStartResultState($rawRequestParams);
 		$deleting = FALSE;
 		$this->SubmitSetStartResultState($rawRequestParams);
 		if ($submitWithParams) {
@@ -90,6 +89,7 @@ trait ModelFormSubmitMethods {
 	 */
 	protected function submitModelFormExecManipulations () {
 		$changed = FALSE;
+		$clientDefaultErrorMessage = NULL;
 		if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
 			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
 			$changed = $this->submitCreate();
