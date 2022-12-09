@@ -31,19 +31,10 @@ trait ModelFormSubmitMethods {
 			$this->Init(TRUE);
 		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
 			$this->PreDispatch(TRUE);
-		$submitWithParams = count($rawRequestParams) > 0;
-		if (!$submitWithParams) {
-			$sourceType = $this->method === \MvcCore\Ext\IForm::METHOD_GET
-				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
-				: \MvcCore\IRequest::PARAM_TYPE_INPUT;
-			$paramsKeys = array_keys($this->fields);
-			if ($this->csrfEnabled)
-				$paramsKeys[] = $this->getSession()->csrf[0];
-			$rawRequestParams = $this->request->GetParams(
-				FALSE, $paramsKeys, $sourceType
-			);
-		}
 		$deleting = FALSE;
+		list(
+			$submitWithParams, $rawRequestParams
+		) = $this->submitModelFormCompleteParams($rawRequestParams);
 		$this->SubmitSetStartResultState($rawRequestParams);
 		if ($submitWithParams) {
 			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
@@ -60,16 +51,8 @@ trait ModelFormSubmitMethods {
 		if (!$this->application->GetTerminated()) {
 			if ($deleting)
 				$this->result = IModelForm::RESULT_SUCCESS_DELETE;
-			if ($this->submitHasResultManipulationFlag($this->result)) {
-				$clientDefaultErrorMessage = NULL;
-				try {
-					$clientDefaultErrorMessage = $this->submitModelFormExecManipulations();
-				} catch (\Throwable $e) {
-					$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
-						isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
-					]);
-				}
-			}
+			if ($this->submitHasResultManipulationFlag($this->result)) 
+				$this->submitModelFormExecManipulations();
 			if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
 				$this->SaveSession();
 			} else {
@@ -84,26 +67,54 @@ trait ModelFormSubmitMethods {
 	}
 
 	/**
+	 * Get raw form submit values by form method if given array is empty.
+	 * @param  array $rawRequestParams optional
+	 * @return array An array to list: `[$submitWithParams, $rawRequestParams];`
+	 */
+	protected function submitModelFormCompleteParams (array & $rawRequestParams = []) {
+		$submitWithParams = count($rawRequestParams) > 0;
+		if (!$submitWithParams) {
+			$sourceType = $this->method === \MvcCore\Ext\IForm::METHOD_GET
+				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
+				: \MvcCore\IRequest::PARAM_TYPE_INPUT;
+			$paramsKeys = array_keys($this->fields);
+			if ($this->csrfEnabled)
+				$paramsKeys[] = $this->getSession()->csrf[0];
+			$rawRequestParams = $this->request->GetParams(
+				FALSE, $paramsKeys, $sourceType
+			);
+		}
+		return [$submitWithParams, $rawRequestParams];
+	}
+
+	/**
 	 * Execute submit manipulation methods.
 	 * @return string|NULL
 	 */
 	protected function submitModelFormExecManipulations () {
 		$changed = FALSE;
 		$clientDefaultErrorMessage = NULL;
-		if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
-			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
-			$changed = $this->submitCreate();
-		} else if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
-			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
-			$changed = $this->submitEdit();
-		} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
-			$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
-			$changed = $this->submitDelete();
+		try {
+			if ($this->isModelNew() && ($this->result & IModelForm::RESULT_SUCCESS_CREATE) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['create'];
+				$changed = $this->submitCreate();
+			} else if (($this->result & IModelForm::RESULT_SUCCESS_EDIT) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['edit'];
+				$changed = $this->submitEdit();
+			} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
+				$changed = $this->submitDelete();
+			}
+			if ($this->result !== \MvcCore\Ext\IForm::RESULT_ERRORS) {
+				$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
+					? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
+					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
+			}
+		} catch (\Throwable $e) {
+			$this->logAndAddSubmitError($e, $clientDefaultErrorMessage, [
+				isset($this->modelClassFullName) ? $this->modelClassFullName : NULL
+			]);
 		}
-		$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
-			? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
-			: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
-		return $clientDefaultErrorMessage;
 	}
 
 	/**
