@@ -211,12 +211,13 @@ trait ModelFormInitMethods {
 	 * @return \MvcCore\Ext\Forms\Field|NULL
 	 */
 	protected function initModelField2Add ($modelPropName, $propMetaData, $attrsAnotations) {
+		$toolClass = $this->application->GetToolClass();
 		if ($attrsAnotations) {
-			$fieldsAttrs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
+			$fieldsAttrs = array_filter($toolClass::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, array_values($this->fieldsTypes), TRUE
 			), 'is_array');
 		} else {
-			$fieldsAttrs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
+			$fieldsAttrs = array_filter($toolClass::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, [\MvcCore\Ext\ModelForms\IModel::PHP_DOCS_TAG_NAME_FIELD], FALSE
 			), 'is_array');;
 		}
