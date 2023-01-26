@@ -89,7 +89,7 @@ trait ModelFormSubmitMethods {
 
 	/**
 	 * Execute submit manipulation methods.
-	 * @return string|NULL
+	 * @return void
 	 */
 	protected function submitModelFormExecManipulations () {
 		$changed = FALSE;
