@@ -55,8 +55,8 @@ trait ModelFormMethods {
 		/** @var \MvcCore\Debug $debugClass */
 		$debugClass = $this->controller->GetApplication()->GetDebugClass();
 		$debugClass::Log($errorToLog);
-		
-		if ($this->controller->GetEnvironment()->IsDevelopment())
+
+		if ($this->controller->GetEnvironment()->IsDevelopment() && $debugClass::GetDebugging())
 			$debugClass::Exception($errorToLog);
 
 		$this->result = \MvcCore\Ext\IForm::RESULT_ERRORS;
