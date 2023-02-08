@@ -259,7 +259,7 @@ trait ModelFormInitMethods {
 		list ($fieldFullClassName, $fieldCtorConfig) = $this->initModelFieldGetClassAndConfig(
 			$modelPropName, $fieldsAttrs, $attrsAnotations
 		);
-		
+
 		$fieldType = new \ReflectionClass($fieldFullClassName);
 		$fieldCtorConfig['name'] = $modelPropName;
 		if (!isset($fieldCtorConfig['required']))
@@ -267,7 +267,32 @@ trait ModelFormInitMethods {
 		
 		/** @var \MvcCore\Ext\Forms\Field $fieldInstance */
 		$fieldInstance = $fieldType->newInstanceArgs([$fieldCtorConfig]);
-		
+
+		return $this->initModelFieldSetUpMetaData($fieldInstance, $propMetaData);
+	}
+
+	/**
+	 * Set up into newly created form field all known special properties from metadata:
+	 * @template
+	 * @param  \MvcCore\Ext\Forms\Field                    $fieldInstance
+	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
+	 * @return \MvcCore\Ext\Forms\Field
+	 */
+	protected function initModelFieldSetUpMetaData ($fieldInstance, $propMetaData) {
+
+		// date/time inputs:
+		if (
+			$propMetaData->FormatData !== NULL && 
+			count($propMetaData->FormatData) > 0 && 
+			$fieldInstance instanceof \MvcCore\Ext\Forms\Fields\IFormat
+		) $fieldInstance->SetFormat($propMetaData->FormatData[0]);
+		if (
+			$propMetaData->ParserData !== NULL && 
+			count($propMetaData->ParserData) > 0 &&
+			isset($propMetaData->ParserData['tz']) && 
+			$fieldInstance instanceof \MvcCore\Ext\Forms\Fields\ITimeZone
+		) $fieldInstance->SetTimeZone($propMetaData->ParserData['tz']);
+
 		return $fieldInstance;
 	}
 

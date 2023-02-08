@@ -56,6 +56,7 @@ trait ModelFormSubmitMethods {
 			if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
 				$this->SaveSession();
 			} else {
+				$this->result |= self::RESULT_SUCCESS;
 				$this->ClearSession();
 			}
 		}
