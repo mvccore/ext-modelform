@@ -79,8 +79,8 @@ trait ModelFormSubmitMethods {
 				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
 				: \MvcCore\IRequest::PARAM_TYPE_INPUT;
 			$paramsKeys = array_keys($this->fields);
-			if ($this->csrfEnabled)
-				$paramsKeys[] = $this->getSession()->csrf[0];
+			if ($this->csrfEnabled && count($this->csrfValue) > 0)
+				$paramsKeys[] = $this->csrfValue[0];
 			$rawRequestParams = $this->request->GetParams(
 				FALSE, $paramsKeys, $sourceType
 			);
