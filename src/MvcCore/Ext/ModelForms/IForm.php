@@ -34,17 +34,23 @@ interface IForm {
 	const RESULT_SUCCESS_DELETE				= 32;
 	
 	/**
+	 * Success result form state to copy model instance.
+	 * @var int
+	 */
+	const RESULT_SUCCESS_COPY				= 64;
+	
+	/**
 	 * Success result form state when model instance has been change.
 	 * @var int
 	 */
-	const RESULT_SUCCESS_MODEL_CHANGED		= 64;
+	const RESULT_SUCCESS_MODEL_CHANGED		= 128;
 
 	/**
 	 * Success result form state when model instance has without changes.
 	 * (form has been submitted without changed values).
 	 * @var int
 	 */
-	const RESULT_SUCCESS_MODEL_NOT_CHANGED	= 128;
+	const RESULT_SUCCESS_MODEL_NOT_CHANGED	= 256;
 
 
 	/**

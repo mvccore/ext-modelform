@@ -35,18 +35,22 @@ trait ModelFormSubmitMethods {
 		list(
 			$submitWithParams, $rawRequestParams
 		) = $this->submitModelFormCompleteParams($rawRequestParams);
-		$this->SubmitSetStartResultState($rawRequestParams);
+		$result = $this->SubmitSetStartResultState($rawRequestParams)->result;
+		$deleting = ($result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
+		if ($deleting) 
+			foreach ($this->fields as $field) $field->SetRequired(FALSE);
 		if ($submitWithParams) {
-			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
 			if ($deleting) foreach ($this->fields as $field) $field->SetRequired(FALSE);
 			$this->SubmitAllFields($rawRequestParams);
 		} else if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
-			$deleting = ($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
-			if ($deleting) foreach ($this->fields as $field) $field->SetRequired(FALSE);
 			$this->application->ValidateCsrfProtection();
 			$this->SubmitCsrfTokens($rawRequestParams);// deprecated, but working in all browsers
-			if (!$this->application->GetTerminated()) 
+			if (!$this->application->GetTerminated())
 				$this->SubmitAllFields($rawRequestParams);
+		}
+		if ($deleting && $this->result !== self::RESULT_ERRORS) {
+			$this->errors = [];
+			$this->result = $result;
 		}
 		if (!$this->application->GetTerminated()) {
 			if ($deleting)
@@ -77,7 +81,7 @@ trait ModelFormSubmitMethods {
 		if (!$submitWithParams) {
 			$sourceType = $this->method === \MvcCore\Ext\IForm::METHOD_GET
 				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
-				: \MvcCore\IRequest::PARAM_TYPE_INPUT;
+				: \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING | \MvcCore\IRequest::PARAM_TYPE_INPUT; // sometimes there could be mixed GET and POST
 			$paramsKeys = array_keys($this->fields);
 			if ($this->csrfEnabled && count($this->csrfValue) > 0)
 				$paramsKeys[] = $this->csrfValue[0];
@@ -105,6 +109,9 @@ trait ModelFormSubmitMethods {
 			} else if (($this->result & IModelForm::RESULT_SUCCESS_DELETE) != 0) {
 				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['delete'];
 				$changed = $this->submitDelete();
+			} else if (($this->result & IModelForm::RESULT_SUCCESS_COPY) != 0) {
+				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['copy'];
+				$changed = $this->submitCopy();
 			}
 			if ($this->result !== \MvcCore\Ext\IForm::RESULT_ERRORS) {
 				$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
@@ -120,7 +127,7 @@ trait ModelFormSubmitMethods {
 
 	/**
 	 * Create model instance if necessary by PHP reflection without calling constructor,
-	 * Than call model model instance `Insert()` method.
+	 * Than call model instance `Insert()` method.
 	 * @return bool
 	 */
 	protected function submitCreate () {
@@ -138,7 +145,7 @@ trait ModelFormSubmitMethods {
 	}
 	
 	/**
-	 * Call model model instance `Update()` method.
+	 * Call model instance `Update()` method.
 	 * @return bool
 	 */
 	protected function submitEdit () {
@@ -154,13 +161,29 @@ trait ModelFormSubmitMethods {
 	}
 
 	/**
-	 * Call model model instance `Delete()` method.
+	 * Call model instance `Delete()` method.
 	 * @return bool
 	 */
 	protected function submitDelete () {
 		if ($this->modelInstance === NULL)
 			throw new \RuntimeException("Model instance to delete not initialized.");
 		return $this->modelInstance->Delete($this->modelPropsFlags);
+	}
+	
+	/**
+	 * Call `__clone()`d model instance `Insert()` method.
+	 * @return bool
+	 */
+	protected function submitCopy () {
+		if ($this->modelInstance === NULL)
+			throw new \RuntimeException("Model instance to copy not initialized.");
+		$modelValues = $this->submitGetModelValues();
+		if (count($modelValues) > 0)
+			$this->modelInstance->SetValues($modelValues, $this->modelPropsFlags);
+		$newInstance = clone $this->modelInstance;
+		$result = $newInstance->Insert($this->modelPropsFlags);
+		$this->modelInstance = $newInstance;
+		return $result;
 	}
 
 	/**

@@ -27,7 +27,8 @@ trait PropsSubmit {
 	protected static $submitResultManipulationFlags = [
 		IModelForm::RESULT_SUCCESS_CREATE,
 		IModelForm::RESULT_SUCCESS_EDIT,
-		IModelForm::RESULT_SUCCESS_DELETE
+		IModelForm::RESULT_SUCCESS_DELETE,
+		IModelForm::RESULT_SUCCESS_COPY
 	];
 	
 	/**
@@ -38,6 +39,7 @@ trait PropsSubmit {
 		'create'	=> 'create',
 		'edit'		=> 'save',
 		'delete'	=> 'delete',
+		'copy'		=> 'copy',
 	];
 	
 	/**
@@ -48,6 +50,7 @@ trait PropsSubmit {
 		'create'	=> 'Create',
 		'edit'		=> 'Save',
 		'delete'	=> 'Delete',
+		'copy'		=> 'Copy',
 	];
 	
 	/**
@@ -61,5 +64,6 @@ trait PropsSubmit {
 		'create'	=> "Error when creating new database record `{0}`.",
 		'edit'		=> "Error when saving database record `{0}`.",
 		'delete'	=> "Error when removing database record `{0}`.",
+		'copy'		=> "Error when copying database record `{0}`.",
 	];
 }

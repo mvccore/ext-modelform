@@ -49,15 +49,20 @@ trait ModelFormInitMethods {
 				->SetValue($submitTexts->create);
 			$this->AddField($create);
 		} else {
-			$save = (new Fields\SubmitButton)
+			$edit = (new Fields\SubmitButton)
 				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_EDIT)
 				->SetName($submitNames->edit)
 				->SetValue($submitTexts->edit);
-			$remove = (new Fields\SubmitButton)
+			$delete = (new Fields\SubmitButton)
+				->SetFormNoValidate(TRUE)
 				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_DELETE)
 				->SetName($submitNames->delete)
 				->SetValue($submitTexts->delete);
-			$this->AddFields($save, $remove);
+			$copy = (new Fields\SubmitButton)
+				->SetCustomResultState(\MvcCore\Ext\ModelForms\IForm::RESULT_SUCCESS_COPY)
+				->SetName($submitNames->copy)
+				->SetValue($submitTexts->copy);
+			$this->AddFields($edit, $delete, $copy);
 		}
 	}
 
