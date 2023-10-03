@@ -21,9 +21,9 @@
 	}],
 	"require": {
 		"php": ">=5.4.0",
-		"mvccore/mvccore": "^5.2.9",
-		"mvccore/ext-model-db": "^5.2.13",
-		"mvccore/ext-form": "^5.2.0"
+		"mvccore/mvccore": "^5.2.19",
+		"mvccore/ext-model-db": "^5.2.17",
+		"mvccore/ext-form": "^5.2.8"
 	},
 	"suggest": {
 		"mvccore/ext-cache-*": "MvcCore cache extensions to speed up operations driven by class anotations.",
