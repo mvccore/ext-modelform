@@ -19,7 +19,7 @@ namespace MvcCore\Ext\ModelForms\Form;
 trait GettersSetters {
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return string
 	 */
 	public function GetModelClassFullName () {
@@ -27,7 +27,7 @@ trait GettersSetters {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  string $modelClassFullName
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -38,7 +38,7 @@ trait GettersSetters {
 
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -50,7 +50,7 @@ trait GettersSetters {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \MvcCore\Ext\ModelForms\IModel|NULL
 	 */
 	public function GetModelInstance () {
@@ -59,7 +59,7 @@ trait GettersSetters {
 
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return int
 	 */
 	public function GetModelPropsFlags () {
@@ -67,7 +67,7 @@ trait GettersSetters {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int $modelPropsFlags
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -78,7 +78,7 @@ trait GettersSetters {
 
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetFieldsTypes () {
@@ -86,7 +86,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $fieldsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -96,7 +96,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $fieldsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -108,7 +108,7 @@ trait GettersSetters {
 
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return \string[]
 	 */
 	public function GetValidatorsTypes () {
@@ -116,7 +116,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $validatorsTypes 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -126,7 +126,7 @@ trait GettersSetters {
 	}
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  \string[] $validatorsTypes,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -138,7 +138,7 @@ trait GettersSetters {
 
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return array
 	 */
 	public function GetSubmitNames () {
@@ -146,7 +146,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param array $submitNames 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -157,7 +157,7 @@ trait GettersSetters {
 
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return array
 	 */
 	public function GetSubmitTexts () {
@@ -165,7 +165,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param array $submitTexts 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
@@ -176,7 +176,7 @@ trait GettersSetters {
 
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @return array
 	 */
 	public function GetDefaultClientErrorMessages () {
@@ -184,7 +184,7 @@ trait GettersSetters {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param array $defaultClientErrorMessages 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */

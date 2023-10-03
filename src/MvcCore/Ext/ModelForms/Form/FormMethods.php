@@ -19,7 +19,7 @@ namespace MvcCore\Ext\ModelForms\Form;
 trait FormMethods {
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @template
 	 * @param  bool $submit `TRUE` if form is submitting, `FALSE` otherwise by default.
 	 * @throws \RuntimeException No form id property defined or Form id `...` already defined.
@@ -38,7 +38,7 @@ trait FormMethods {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @template
 	 * @param  array $rawRequestParams optional
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`

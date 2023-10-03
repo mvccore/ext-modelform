@@ -32,7 +32,7 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	const VERSION = '5.2.2';
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  bool $submit      `TRUE` if form is submitting, `FALSE` otherwise by default.
 	 * @throws \RuntimeException No form id property defined or Form id `...` already defined.
 	 * @return void
@@ -44,7 +44,7 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  array $rawRequestParams Optional, raw `$_POST` or `$_GET` array could be passed.
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */

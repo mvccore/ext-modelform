@@ -19,7 +19,7 @@ namespace MvcCore\Ext\ModelForms\Model;
 trait Features {
 	
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int $propsFlags
 	 * @return \string[][]|NULL[]|array
 	 */
@@ -54,7 +54,7 @@ trait Features {
 	}
 
 	/**
-	 * @inheritDocs
+	 * @inheritDoc
 	 * @param  int $propsFlags
 	 * @return \MvcCore\Ext\ModelForms\Models\PropertyMeta[]|array
 	 */
