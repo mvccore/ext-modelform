@@ -73,10 +73,10 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelFormId ($submit = FALSE) {
-		$formIdScBegin = str_replace('_', '\\', get_class($this));
-		foreach (static::$formNamespaces as $formNamespace) {
-			if (mb_strpos($formIdScBegin, $formNamespace) === 0) {
-				$formIdDcBegin = mb_substr($formIdScBegin, mb_strlen($formNamespace));
+		$formIdScBegin = '\\' . ltrim(str_replace('_', '\\', get_class($this)), '\\');
+		foreach (static::$formsNamespaces as $formsNamespace) {
+			if (mb_strpos($formIdScBegin, $formsNamespace) === 0) {
+				$formIdDcBegin = mb_substr($formIdScBegin, mb_strlen($formsNamespace));
 				break;
 			}
 		}
@@ -218,9 +218,16 @@ trait ModelFormInitMethods {
 	protected function initModelField2Add ($modelPropName, $propMetaData, $attrsAnotations) {
 		$toolClass = $this->application->GetToolClass();
 		if ($attrsAnotations) {
-			$fieldsAttrs = array_filter($toolClass::GetPropertyAttrsArgs(
-				$this->modelClassFullName, $modelPropName, array_values($this->fieldsTypes), TRUE
-			), 'is_array');
+			$fieldsAttrs = [];
+			$reflectionObject = new \ReflectionProperty($this->modelClassFullName, $modelPropName);
+			foreach (static::$fieldsNamespaces as $fieldsNamespace) {
+				list($attrName, $ctorArgs) = $this->initModelFieldGetPropAttribute(
+					$reflectionObject, $fieldsNamespace
+				);
+				if ($attrName !== NULL) {
+					$fieldsAttrs[$attrName] = $ctorArgs;
+				}
+			}
 		} else {
 			$fieldsAttrs = array_filter($toolClass::GetPropertyAttrsArgs(
 				$this->modelClassFullName, $modelPropName, [\MvcCore\Ext\ModelForms\IModel::PHP_DOCS_TAG_NAME_FIELD], FALSE
@@ -315,25 +322,28 @@ trait ModelFormInitMethods {
 			$fieldFullClassName = $fieldsAttrsKeys[0];
 			$fieldCtorArgs = $fieldsAttrs[$fieldFullClassName];
 			$fieldCtorConfig = is_array($fieldCtorArgs) ? $fieldCtorArgs : [];
-
 		} else {
 			$fieldTag = $fieldsAttrsKeys[0];
 			$fieldCtorArgs = $fieldsAttrs[$fieldTag];
 			$fieldCtorArgsCnt = count($fieldCtorArgs);
-			$fieldTagFieldName = NULL;
+			$fieldFullClassName = NULL;
 			$fieldCtorConfig = [];
 			if ($fieldCtorArgsCnt > 0 && $fieldCtorArgsCnt < 3) {
 				$fieldTagFieldName = $fieldCtorArgs[0];
+				if (isset($this->fieldsTags[$fieldTagFieldName])) {
+					$fieldFullClassName = $this->fieldsTags[$fieldTagFieldName];
+				} else if (class_exists($fieldTagFieldName)) {
+					$fieldFullClassName = $fieldTagFieldName;
+				}
 				if ($fieldCtorArgsCnt > 1 && (is_array($fieldCtorArgs[1]) || $fieldCtorArgs[1] instanceof \stdClass)) 
 					$fieldCtorConfig = (array) $fieldCtorArgs[1];
 			}
-			if ($fieldTagFieldName === NULL || !isset($this->fieldsTypes[$fieldTagFieldName])) 
+			if ($fieldFullClassName === NULL) 
 				throw new \InvalidArgumentException(
-					"Decorated model form filed type `{$fieldTagFieldName}` doesn`t exist on property ".
+					"Decorated model form filed type `{$fieldTagFieldName}` doesn't exist on property ".
 					"`{$modelPropName}` in class `{$this->modelClassFullName}`. Model property decoration ".
 					'has to be in format: `@field FieldClassName({"label":"Label text",...})`.'
 				);
-			$fieldFullClassName = $this->fieldsTypes[$fieldTagFieldName];
 			$fieldCtorConfig = $fieldCtorConfig instanceof \stdClass 
 				? (array) $fieldCtorConfig
 				: (is_array($fieldCtorConfig) ? $fieldCtorConfig : []);
@@ -375,9 +385,17 @@ trait ModelFormInitMethods {
 	 */
 	protected function initModelFieldValidatorsClassesAndConfigs ($modelPropName, $attrsAnotations) {
 		if ($attrsAnotations) {
-			$validatorsClassesAndConfigs = array_filter(\MvcCore\Tool::GetPropertyAttrsArgs(
-				$this->modelClassFullName, $modelPropName, array_values($this->validatorsTypes), TRUE
-			), 'is_array');
+			$validatorsClassesAndConfigs = [];
+			$reflectionObject = new \ReflectionProperty($this->modelClassFullName, $modelPropName);
+			foreach (static::$validatorsNamespaces as $validatorsNamespace) {
+				list($attrName, $ctorArgs) = $this->initModelFieldGetPropAttribute(
+					$reflectionObject, $validatorsNamespace
+				);
+				if ($attrName !== NULL) {
+					$validatorsClassesAndConfigs[$attrName] = $ctorArgs;
+				}
+			}
+			
 			foreach ($validatorsClassesAndConfigs as $validatorFullClassName => $validatorCtorArgs) 
 				$validatorsAttrs[$validatorFullClassName] = (
 					isset($validatorCtorArgs[0]) && is_array($validatorCtorArgs[0])
@@ -396,18 +414,24 @@ trait ModelFormInitMethods {
 				for ($i = 0; $i < $length; $i++) {
 					$validatorClassOrCtorArgs = $validatorCtorArgs[$i];
 					if (is_string($validatorClassOrCtorArgs)) {
-						if (!isset($this->validatorsTypes[$validatorClassOrCtorArgs]))
+						if (isset($this->validatorsTags[$validatorClassOrCtorArgs])) {
+							$validatorFullClassName = $this->validatorsTags[$validatorClassOrCtorArgs];
+						} else if (class_exists($validatorClassOrCtorArgs)) {
+							$validatorFullClassName = $validatorClassOrCtorArgs;
+						} else {
 							throw new \InvalidArgumentException(
-							"Decorated model form validator type `{$validatorClassOrCtorArgs}` doesn`t exist on property ".
-							"`{$modelPropName}` in class `{$this->modelClassFullName}`. Model property decoration ".
-							'has to be in format: `@validator ValidatorClassName({"option":"value",...})`.'
+								"Decorated model form validator type `{$validatorClassOrCtorArgs}` doesn`t exist on property ".
+								"`{$modelPropName}` in class `{$this->modelClassFullName}`. Model property decoration ".
+								'has to be in format: `@validator ValidatorClassName({"option":"value",...})`.'
 							);
-						$validatorFullClassName = $this->validatorsTypes[$validatorClassOrCtorArgs];
+						}
 						$validatorCtorConfig = [];
 						if ($i + 1 < $length) {
 							$nextIndex = $i + 1;
 							if (!is_string($validatorCtorArgs[$nextIndex])) {
 								$validatorCtorConfig = $validatorCtorArgs[$nextIndex];
+								if ($validatorCtorConfig instanceof \stdClass)
+									$validatorCtorConfig = (array) $validatorCtorConfig;
 								$i++;
 							}
 						}
@@ -416,7 +440,29 @@ trait ModelFormInitMethods {
 				}
 			}
 		}
-
+		
 		return $validatorsClassesAndConfigs;
 	}
+
+	
+	/**
+	 * @inheritDoc
+	 * @param  \ReflectionProperty $reflectionObject 
+	 * @param  string              $attrClassNamespace
+	 * @return array
+	 */
+	protected function initModelFieldGetPropAttribute ($reflectionObject, $attrClassNamespace) {
+		$attrName = NULL;
+		$ctorArgs = NULL;
+		foreach ($reflectionObject->getAttributes() as $allAttr) {
+			$attrNameLocal = '\\' . ltrim($allAttr->getName(), '\\');
+			if (mb_strpos($attrNameLocal, $attrClassNamespace) === 0) {
+				$attrName = $attrNameLocal;
+				$ctorArgs = $allAttr->getArguments();
+				break;
+			}
+		}
+		return [$attrName, $ctorArgs];
+	}
+
 }

@@ -79,60 +79,60 @@ trait GettersSetters {
 
 	/**
 	 * @inheritDoc
-	 * @return \string[]
+	 * @return array<string, string>
 	 */
-	public function GetFieldsTypes () {
-		return $this->fieldsTypes;
+	public function GetFieldsTags () {
+		return $this->fieldsTags;
 	}
 
 	/**
 	 * @inheritDoc
-	 * @param  \string[] $fieldsTypes 
+	 * @param  array<string, string> $fieldsTags
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetFieldsTypes ($fieldsTypes) {
-		$this->fieldsTypes = $fieldsTypes;
+	public function SetFieldsTags ($fieldsTags) {
+		$this->fieldsTags = $fieldsTags;
 		return $this;
 	}
 
 	/**
 	 * @inheritDoc
-	 * @param  \string[] $fieldsTypes,...
+	 * @param  array<string, string> $fieldsTags,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function AddFieldsTypes ($fieldsTypes) {
-		if (!is_array($fieldsTypes)) $fieldsTypes = func_get_args();
-		$this->fieldsTypes += $fieldsTypes;
+	public function AddFieldsTags ($fieldsTags) {
+		if (!is_array($fieldsTags)) $fieldsTags = func_get_args();
+		$this->fieldsTags = array_merge([], $this->fieldsTags, $fieldsTags);
 		return $this;
 	}
 
 	
 	/**
 	 * @inheritDoc
-	 * @return \string[]
+	 * @return array<string, string>
 	 */
-	public function GetValidatorsTypes () {
-		return $this->validatorsTypes;
+	public function GetValidatorsTags () {
+		return $this->validatorsTags;
 	}
 
 	/**
 	 * @inheritDoc
-	 * @param  \string[] $validatorsTypes 
+	 * @param  array<string, string> $validatorsTags 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function SetValidatorsTypes ($validatorsTypes) {
-		$this->validatorsTypes = $validatorsTypes;
+	public function SetValidatorsTags ($validatorsTags) {
+		$this->validatorsTags = $validatorsTags;
 		return $this;
 	}
 	
 	/**
 	 * @inheritDoc
-	 * @param  \string[] $validatorsTypes,...
+	 * @param  array<string, string> $validatorsTags,...
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
-	public function AddValidatorsTypes ($validatorsTypes) {
-		if (!is_array($validatorsTypes)) $validatorsTypes = func_get_args();
-		$this->validatorsTypes += $validatorsTypes;
+	public function AddValidatorsTags ($validatorsTags) {
+		if (!is_array($validatorsTags)) $validatorsTags = func_get_args();
+		$this->validatorsTags = array_merge([], $this->validatorsTags, $validatorsTags);
 		return $this;
 	}
 
@@ -192,4 +192,60 @@ trait GettersSetters {
 		$this->defaultClientErrorMessages = $defaultClientErrorMessages;
 		return $this;
 	}
+
+
+	/**
+	 * @inheritDoc
+	 * @return \string[]
+	 */
+	public static function GetFormsNamespaces () {
+		return static::$formsNamespaces;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @param  \string[] $formsNamespaces 
+	 * @return \string[]
+	 */
+	public static function SetFormsNamespaces ($formsNamespaces) {
+		return static::$formsNamespaces = $formsNamespaces;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @param  \string[] $formsNamespaces,...
+	 * @return \string[]
+	 */
+	public static function AddFormsNamespaces ($formsNamespaces) {
+		if (!is_array($formsNamespaces)) $formsNamespaces = func_get_args();
+		return static::$formsNamespaces = array_merge([], static::$formsNamespaces, $formsNamespaces);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @return array<string, string>
+	 */
+	public static function GetFieldsNamespaces () {
+		return static::$fieldsNamespaces;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @param  array<string, string> $fieldsNamespaces 
+	 * @return array<string, string>
+	 */
+	public static function SetFieldsNamespaces ($fieldsNamespaces) {
+		return static::$fieldsNamespaces = $fieldsNamespaces;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @param  array<string, string> $fieldsNamespaces,...
+	 * @return array<string, string>
+	 */
+	public static function AddFieldsNamespaces ($fieldsNamespaces) {
+		if (!is_array($fieldsNamespaces)) $fieldsNamespaces = func_get_args();
+		return static::$fieldsNamespaces = array_merge([], static::$fieldsNamespaces, $fieldsNamespaces);
+	}
+
 }

@@ -16,13 +16,14 @@ namespace MvcCore\Ext\ModelForms\Form;
 /**
  * @mixin \MvcCore\Ext\ModelForms\Form
  */
-trait PropsValidatorsTypes {
+trait PropsValidatorsTags {
 
 	/**
 	 * Custom set of validator classes to be able to decorate on model properties.
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
 	 * @var \string[]
 	 */
-	protected $validatorsTypes = [
+	protected $validatorsTags = [
 		'Clear'			=> 'MvcCore\\Ext\\Forms\\Validators\\Clear',
 		'Local'			=> 'MvcCore\\Ext\\Forms\\Validators\\Local',
 		'Color'			=> 'MvcCore\\Ext\\Forms\\Validators\\Color',

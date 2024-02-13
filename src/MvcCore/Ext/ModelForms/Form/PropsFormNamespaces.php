@@ -22,8 +22,19 @@ trait PropsFormNamespaces {
 	 * Default form namespaces to have shorter form id session key.
 	 * @var \string[]
 	 */
-	protected static $formNamespaces = [
-		'App\\Forms\\',
-		'MvcCore\\Ext\\',
+	protected static $formsNamespaces = [
+		'\\App\\Forms\\',
+		'\\MvcCore\\Ext\\',
 	];
+	
+	/**
+	 * Form fields base namespaces to create fields instances by decorated class names.
+	 * Field will be created by class existence in this namespaces order.
+	 * This array is used only for newer way how to decorate properties by PHP attributes.
+	 * @var \string[]
+	 */
+	protected static $fieldsNamespaces = [
+		'\\MvcCore\\Ext\\Forms\\Fields\\'
+	];
+
 }

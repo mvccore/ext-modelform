@@ -106,46 +106,52 @@ interface IForm {
 
 	/**
 	 * Get defined set of field classes to be able to decorate on model properties.
-	 * @return \string[]
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @return array<string, string>
 	 */
-	public function GetFieldsTypes ();
+	public function GetFieldsTags ();
 
 	/**
 	 * Set custom set of field classes to be able to decorate on model properties.
 	 * All previous field classes will be replaced with given values.
-	 * @param  \string[] $fieldsTypes 
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @param  array<string, string> $fieldsTags 
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function SetFieldsTypes ($fieldsTypes);
+	public function SetFieldsTags ($fieldsTags);
 
 	/**
 	 * Add custom set of field classes to be able to decorate on model properties.
-	 * @param  \string[] $fieldsTypes,...
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @param  array<string, string> $fieldsTags,...
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function AddFieldsTypes ($fieldsTypes);
+	public function AddFieldsTags ($fieldsTags);
 
 	
 	/**
 	 * Get defined set of validator classes to be able to decorate on model properties.
-	 * @return \string[]
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @return array<string, string>
 	 */
-	public function GetValidatorsTypes ();
+	public function GetValidatorsTags ();
 
 	/**
 	 * Set custom set of validator classes to be able to decorate on model properties.
 	 * All previous validator classes will be replaced with given values.
-	 * @param  \string[] $validatorsTypes 
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @param  array<string, string> $validatorsTags 
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function SetValidatorsTypes ($validatorsTypes);
+	public function SetValidatorsTags ($validatorsTags);
 	
 	/**
 	 * Add custom set of validator classes to be able to decorate on model properties.
-	 * @param  \string[] $validatorsTypes,...
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
+	 * @param  array<string, string> $validatorsTags,...
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
-	public function AddValidatorsTypes ($validatorsTypes);
+	public function AddValidatorsTags ($validatorsTags);
 
 
 	/**
@@ -196,4 +202,54 @@ interface IForm {
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetDefaultClientErrorMessages (array $defaultClientErrorMessages);
+
+
+	/**
+	 * Get default form namespaces to have shorter form id session key.
+	 * @return \string[]
+	 */
+	public static function GetFormsNamespaces ();
+
+	/**
+	 * Set default form namespaces to have shorter form id session key.
+	 * All previous default form namespaces will be replaced with given values.
+	 * @param  \string[] $formsNamespaces 
+	 * @return \string[]
+	 */
+	public static function SetFormsNamespaces ($formsNamespaces);
+	
+	/**
+	 * Add default form namespaces to have shorter form id session key.
+	 * @param  \string[] $formsNamespaces,...
+	 * @return \string[]
+	 */
+	public static function AddFormsNamespaces ($formsNamespaces);
+	
+	/**
+	 * Get form field base namespaces to create fields instances by decorated class names.
+	 * Field will be created by class existence in this namespaces order.
+	 * This array is used only for newer way how to decorate properties by PHP attributes.
+	 * @return array<string, string>
+	 */
+	public static function GetFieldsNamespaces ();
+
+	/**
+	 * Set form field base namespaces to create fields instances by decorated class names.
+	 * All previous field base namespaces will be replaced with given values.
+	 * Field will be created by class existence in this namespaces order.
+	 * This array is used only for newer way how to decorate properties by PHP attributes.
+	 * @param  array<string, string> $fieldsNamespaces 
+	 * @return array<string, string>
+	 */
+	public static function SetFieldsNamespaces ($fieldsNamespaces);
+	
+	/**
+	 * Add form field base namespace to create fields instances by decorated class names.
+	 * Field will be created by class existence in this namespaces order.
+	 * This array is used only for newer way how to decorate properties by PHP attributes.
+	 * @param  array<string, string> $fieldsNamespaces,...
+	 * @return array<string, string>
+	 */
+	public static function AddFieldsNamespaces ($fieldsNamespaces);
+
 }

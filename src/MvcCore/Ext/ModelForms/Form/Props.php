@@ -48,4 +48,5 @@ trait Props {
 	 * @var string
 	 */
 	protected $modelClassInterface = 'MvcCore\\Ext\\ModelForms\\IModel';
+
 }

@@ -16,13 +16,14 @@ namespace MvcCore\Ext\ModelForms\Form;
 /**
  * @mixin \MvcCore\Ext\ModelForms\Form
  */
-trait PropsFieldsTypes {
+trait PropsFieldsTags {
 
 	/**
 	 * Custom set of field classes to be able to decorate on model properties.
+	 * This array is used only for older way how to decorate properties by PHP Docs tags.
 	 * @var \string[]
 	 */
-	protected $fieldsTypes = [
+	protected $fieldsTags = [
 		'Checkbox'				=> 'MvcCore\\Ext\\Forms\\Fields\\Checkbox',
 		'CheckboxGroup'			=> 'MvcCore\\Ext\\Forms\\Fields\\CheckboxGroup',
 		'Color'					=> 'MvcCore\\Ext\\Forms\\Fields\\Color',

@@ -20,8 +20,8 @@ trait Features {
 	use \MvcCore\Ext\ModelForms\Form\Props,
 		\MvcCore\Ext\ModelForms\Form\PropsFormNamespaces,
 		\MvcCore\Ext\ModelForms\Form\PropsSubmit,
-		\MvcCore\Ext\ModelForms\Form\PropsFieldsTypes,
-		\MvcCore\Ext\ModelForms\Form\PropsValidatorsTypes,
+		\MvcCore\Ext\ModelForms\Form\PropsFieldsTags,
+		\MvcCore\Ext\ModelForms\Form\PropsValidatorsTags,
 
 		\MvcCore\Ext\ModelForms\Form\GettersSetters,
 		\MvcCore\Ext\ModelForms\Form\FormMethods,
