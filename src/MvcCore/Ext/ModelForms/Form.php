@@ -38,8 +38,9 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * @return void
 	 */
 	public function Init ($submit = FALSE) {
-		parent::Init($submit = FALSE);
-		$this->SetModelPropsFlags(\MvcCore\IModel::PROPS_PROTECTED |\MvcCore\IModel::PROPS_INHERIT);
+		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_INITIALIZED, $submit))
+			return;
+		$this->SetModelPropsFlags(\MvcCore\IModel::PROPS_PROTECTED | \MvcCore\IModel::PROPS_INHERIT);
 		$this->initModelForm($submit);
 	}
 

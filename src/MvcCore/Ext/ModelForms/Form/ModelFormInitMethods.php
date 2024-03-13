@@ -27,11 +27,13 @@ trait ModelFormInitMethods {
 	 * @return void
 	 */
 	protected function initModelForm ($submit = FALSE) {
+		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_INITIALIZED, $submit))
+			return;
 		if ($this->id === NULL) $this->initModelFormId($submit);
 		parent::Init($submit);
-		$this->initModelFields($submit);
-		$this->initModelButtons($submit);
-		$this->initModelValues($submit);
+		$this->initModelFields($this->submit);
+		$this->initModelButtons($this->submit);
+		$this->initModelValues($this->submit);
 	}
 	
 	/**

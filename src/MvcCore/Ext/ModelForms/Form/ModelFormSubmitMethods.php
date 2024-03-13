@@ -27,10 +27,8 @@ trait ModelFormSubmitMethods {
 	 * @return array An array to list: `[$form->result, $form->data, $form->errors];`
 	 */
 	protected function submitModelForm (array & $rawRequestParams = []) {
-		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_INITIALIZED) 
-			$this->Init(TRUE);
-		if ($this->dispatchState < \MvcCore\IController::DISPATCH_STATE_PRE_DISPATCHED) 
-			$this->PreDispatch(TRUE);
+		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_SUBMITTED, TRUE))
+			return [$this->result, $this->values, $this->errors];
 		$deleting = FALSE;
 		list(
 			$submitWithParams, $rawRequestParams
@@ -64,11 +62,7 @@ trait ModelFormSubmitMethods {
 				$this->ClearSession();
 			}
 		}
-		return [
-			$this->result,
-			$this->values,
-			$this->errors,
-		];
+		return [$this->result, $this->values, $this->errors];
 	}
 
 	/**
