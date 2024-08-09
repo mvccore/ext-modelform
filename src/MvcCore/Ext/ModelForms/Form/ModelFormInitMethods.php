@@ -411,7 +411,7 @@ trait ModelFormInitMethods {
 			), 'is_array');
 
 			$validatorsClassesAndConfigs = [];
-			foreach ($validatorsAttrs as $validatorFullClasName => $validatorCtorArgs) {
+			foreach ($validatorsAttrs as /*$validatorFullClasName =>*/ $validatorCtorArgs) {
 				$length = count($validatorCtorArgs);
 				for ($i = 0; $i < $length; $i++) {
 					$validatorClassOrCtorArgs = $validatorCtorArgs[$i];
