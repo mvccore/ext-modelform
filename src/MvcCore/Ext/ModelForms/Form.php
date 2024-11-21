@@ -29,7 +29,7 @@ implements	\MvcCore\Ext\ModelForms\IForm {
 	 * Comparison by PHP function version_compare();
 	 * @see http://php.net/manual/en/function.version-compare.php
 	 */
-	const VERSION = '5.2.5';
+	const VERSION = '5.3.0';
 
 	/**
 	 * @inheritDoc
