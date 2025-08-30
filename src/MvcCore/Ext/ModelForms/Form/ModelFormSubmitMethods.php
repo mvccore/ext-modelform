@@ -13,7 +13,9 @@
 
 namespace MvcCore\Ext\ModelForms\Form;
 
-use \MvcCore\Ext\ModelForms\IForm as IModelForm;
+use \MvcCore\Ext\ModelForms\IForm as IModelForm,
+	\MvcCore\Request\IConstants as ReqConsts,
+	\MvcCore\Ext\Form\IConstants as FormConsts;
 
 /**
  * @mixin \MvcCore\Ext\ModelForms\Form|\MvcCore\Ext\Form
@@ -32,58 +34,36 @@ trait ModelFormSubmitMethods {
 		$deleting = FALSE;
 		list(
 			$submitWithParams, $rawRequestParams
-		) = $this->submitModelFormCompleteParams($rawRequestParams);
+		) = $this->submitCompleteParams($rawRequestParams);
 		$result = $this->SubmitSetStartResultState($rawRequestParams)->result;
 		$deleting = ($result & IModelForm::RESULT_SUCCESS_DELETE) != 0;
 		if ($deleting) 
 			foreach ($this->fields as $field) $field->SetRequired(FALSE);
 		if ($submitWithParams) {
-			if ($deleting) foreach ($this->fields as $field) $field->SetRequired(FALSE);
+			if ($deleting) 
+				foreach ($this->fields as $field) 
+				$field->SetRequired(FALSE);
 			$this->SubmitAllFields($rawRequestParams);
 		} else if ($this->SubmitValidateMaxPostSizeIfNecessary()) {
-			$this->application->ValidateCsrfProtection();
-			$this->SubmitCsrfTokens($rawRequestParams);// deprecated, but working in all browsers
-			if (!$this->application->GetTerminated())
-				$this->SubmitAllFields($rawRequestParams);
+			$this->SubmitCsrfTokens($rawRequestParams);
+			$this->regenerateSecurityToken();
+			$this->SubmitAllFields($rawRequestParams);
 		}
 		if ($deleting && $this->result !== self::RESULT_ERRORS) {
 			$this->errors = [];
 			$this->result = $result;
 		}
-		if (!$this->application->GetTerminated()) {
-			if ($deleting)
-				$this->result = IModelForm::RESULT_SUCCESS_DELETE;
-			if ($this->submitHasResultManipulationFlag($this->result)) 
-				$this->submitModelFormExecManipulations();
-			if ($this->result === \MvcCore\Ext\IForm::RESULT_ERRORS) {
-				$this->SaveSession();
-			} else {
-				$this->result |= self::RESULT_SUCCESS;
-				$this->ClearSession();
-			}
+		if ($deleting)
+			$this->result = IModelForm::RESULT_SUCCESS_DELETE;
+		if ($this->submitHasResultManipulationFlag($this->result)) 
+			$this->submitModelFormExecManipulations();
+		if ($this->result === FormConsts::RESULT_ERRORS) {
+			$this->SaveSession();
+		} else {
+			$this->result |= self::RESULT_SUCCESS;
+			$this->ClearSession();
 		}
 		return [$this->result, $this->values, $this->errors];
-	}
-
-	/**
-	 * Get raw form submit values by form method if given array is empty.
-	 * @param  array $rawRequestParams optional
-	 * @return array An array to list: `[$submitWithParams, $rawRequestParams];`
-	 */
-	protected function submitModelFormCompleteParams (array & $rawRequestParams = []) {
-		$submitWithParams = count($rawRequestParams) > 0;
-		if (!$submitWithParams) {
-			$sourceType = $this->method === \MvcCore\Ext\IForm::METHOD_GET
-				? \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING
-				: \MvcCore\IRequest::PARAM_TYPE_QUERY_STRING | \MvcCore\IRequest::PARAM_TYPE_INPUT; // sometimes there could be mixed GET and POST
-			$paramsKeys = array_keys($this->fields);
-			if ($this->csrfEnabled && count($this->csrfValue) > 0)
-				$paramsKeys[] = $this->csrfValue[0];
-			$rawRequestParams = $this->request->GetParams(
-				FALSE, $paramsKeys, $sourceType
-			);
-		}
-		return [$submitWithParams, $rawRequestParams];
 	}
 
 	/**
@@ -107,8 +87,8 @@ trait ModelFormSubmitMethods {
 				$clientDefaultErrorMessage = $this->defaultClientErrorMessages['copy'];
 				$changed = $this->submitCopy();
 			}
-			if ($this->result !== \MvcCore\Ext\IForm::RESULT_ERRORS) {
-				$this->result |= \MvcCore\Ext\IForm::RESULT_SUCCESS | ($changed 
+			if ($this->result !== FormConsts::RESULT_ERRORS) {
+				$this->result |= FormConsts::RESULT_SUCCESS | ($changed 
 					? IModelForm::RESULT_SUCCESS_MODEL_CHANGED
 					: IModelForm::RESULT_SUCCESS_MODEL_NOT_CHANGED);
 			}
