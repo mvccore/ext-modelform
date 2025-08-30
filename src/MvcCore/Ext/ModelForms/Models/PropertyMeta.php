@@ -41,19 +41,19 @@ class PropertyMeta {
 
 	/**
 	 * Property database column name if defined.
-	 * @var string|NULL
+	 * @var ?string
 	 */
 	public $DbColumnName;
 
 	/**
 	 * Property additional parsing data.
-	 * @var \string[]|NULL
+	 * @var ?array<string>
 	 */
 	public $ParserData;
 
 	/**
 	 * Property additional formating data.
-	 * @var \string[]|NULL
+	 * @var ?array<string>
 	 */
 	public $FormatData;
 
@@ -73,7 +73,7 @@ class PropertyMeta {
 	 * `TRUE` if property has defined unique key 
 	 * or string with database unique key name
 	 * or `NULL` if propert has no unique key.
-	 * @var bool|string|NULL
+	 * @var bool|string|null
 	 */
 	public $IsUnique;
 

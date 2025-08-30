@@ -76,14 +76,14 @@ interface IForm {
 	 * you want to edit or delete model record already in database, you have
 	 * to call this method to define model instance to init and submit model 
 	 * form properly.
-	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
+	 * @param  ?\MvcCore\Ext\ModelForms\IModel $modelInstance 
 	 * @return \MvcCore\Ext\ModelForms\IForm
 	 */
 	public function SetModelInstance (\MvcCore\Ext\ModelForms\IModel $modelInstance);
 	
 	/**
 	 * Get model instance. 
-	 * @return \MvcCore\Ext\ModelForms\IModel|NULL
+	 * @return ?\MvcCore\Ext\ModelForms\IModel
 	 */
 	public function GetModelInstance ();
 

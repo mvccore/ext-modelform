@@ -21,7 +21,7 @@ trait Features {
 	/**
 	 * @inheritDoc
 	 * @param  int $propsFlags
-	 * @return \string[][]|NULL[]|array
+	 * @return array{"0":?array<array<string>>,"1":?array<array<string>>}
 	 */
 	public static function GetUniqueFieldsNames ($propsFlags = 0) {
 		if ($propsFlags === 0)

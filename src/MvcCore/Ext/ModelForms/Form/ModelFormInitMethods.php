@@ -215,7 +215,7 @@ trait ModelFormInitMethods {
 	 * @param  string                                      $modelPropName 
 	 * @param  \MvcCore\Ext\ModelForms\Models\PropertyMeta $propMetaData 
 	 * @param  bool                                        $attrsAnotations
-	 * @return \MvcCore\Ext\Forms\Field|NULL
+	 * @return ?\MvcCore\Ext\Forms\Field
 	 */
 	protected function initModelField2Add ($modelPropName, $propMetaData, $attrsAnotations) {
 		$toolClass = $this->application->GetToolClass();

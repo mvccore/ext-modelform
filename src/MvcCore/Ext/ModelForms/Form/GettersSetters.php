@@ -39,7 +39,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDoc
-	 * @param  \MvcCore\Ext\ModelForms\IModel|NULL $modelInstance 
+	 * @param  ?\MvcCore\Ext\ModelForms\IModel $modelInstance 
 	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	public function SetModelInstance ($modelInstance) {
@@ -51,7 +51,7 @@ trait GettersSetters {
 	
 	/**
 	 * @inheritDoc
-	 * @return \MvcCore\Ext\ModelForms\IModel|NULL
+	 * @return ?\MvcCore\Ext\ModelForms\IModel
 	 */
 	public function GetModelInstance () {
 		return $this->modelInstance;

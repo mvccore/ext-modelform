@@ -230,7 +230,7 @@ class Album extends \MvcCore\Ext\Models\Db\Models\MySql {
 
 	/**
 	 * @param int $id
-	 * @return \App\Models\Album|NULL
+	 * @return \App\Models\Album|null
 	 */
 	public static function GetById ($id) {
 		return self::GetConnection()

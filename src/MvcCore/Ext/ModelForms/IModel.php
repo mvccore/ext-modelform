@@ -22,7 +22,7 @@ interface IModel extends \MvcCore\Ext\Models\Db\IModel {
 	/**
 	 * Get array with primary keys fields names and with unique keys fields names.
 	 * @param  int $propsFlags
-	 * @return \string[][]|NULL[]|array
+	 * @return array{"0":?array<array<string>>,"1":?array<array<string>>}
 	 */
 	public static function GetUniqueFieldsNames ($propsFlags = 0);
 

@@ -21,13 +21,13 @@ trait Props {
 	/**
 	 * Model instance with database data to edit or delete, 
 	 * empty new instance or `NULL` to create.
-	 * @var \MvcCore\Ext\ModelForms\IModel|\MvcCore\Ext\Models\Db\Model|NULL
+	 * @var \MvcCore\Ext\ModelForms\IModel|\MvcCore\Ext\Models\Db\Model|null
 	 */
 	protected $modelInstance = NULL;
 	
 	/**
 	 * Model instance full class name.
-	 * @var string|\MvcCore\Ext\ModelForms\Model|NULL
+	 * @var string|\MvcCore\Ext\ModelForms\Model|null
 	 */
 	protected $modelClassFullName = NULL;
 
@@ -39,7 +39,7 @@ trait Props {
 
 	/**
 	 * Boolean about if form creates new model instance or not.
-	 * @var bool|NULL
+	 * @var ?bool
 	 */
 	protected $modelIsNew = NULL;
 
