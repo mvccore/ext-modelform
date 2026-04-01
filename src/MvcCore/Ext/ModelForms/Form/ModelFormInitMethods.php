@@ -24,16 +24,17 @@ trait ModelFormInitMethods {
 	 * Initialize model form id, fields, submit buttons and initial values.
 	 * @param  bool $submit 
 	 * @throws \InvalidArgumentException|\RuntimeException
-	 * @return void
+	 * @return \MvcCore\Ext\ModelForms\Form
 	 */
 	protected function initModelForm ($submit = FALSE) {
 		if (!$this->DispatchStateCheck(static::DISPATCH_STATE_INITIALIZED, $submit))
-			return;
+			return $this;
 		if ($this->id === NULL) $this->initModelFormId($submit);
 		parent::Init($submit);
 		$this->initModelFields($this->submit);
 		$this->initModelButtons($this->submit);
 		$this->initModelValues($this->submit);
+		return $this;
 	}
 	
 	/**
