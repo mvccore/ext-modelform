@@ -139,7 +139,8 @@ trait ModelFormInitMethods {
 		$phpWithTypes = PHP_VERSION_ID >= 70400;
 		foreach ($fieldsNames as $fieldName) {
 			$prop = new \ReflectionProperty($modelClassFullName, $fieldName);
-			$prop->setAccessible(TRUE);
+			if (PHP_VERSION_ID < 80500) 
+				$prop->setAccessible(TRUE);
 			$uniqueFieldValue = NULL;
 			if ($phpWithTypes) {
 				if ($prop->isInitialized($this->modelInstance))
